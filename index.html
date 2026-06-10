@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JDI – Sociedade Unipessoal, LDA | Construção & Engenharia de Excelência</title>
+  <meta name="description" content="JDI Sociedade Unipessoal, LDA – Empresa líder em construção civil, remodelação e engenharia em Moçambique. Conheça o nosso portfólio de obra." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Resource Hints for faster Leaflet & map loads -->
+  <link rel="dns-prefetch" href="https://unpkg.com" />
+  <link rel="preconnect" href="https://unpkg.com" crossorigin />
+  <link rel="dns-prefetch" href="https://a.basemaps.cartocdn.com" />
+  <link rel="preconnect" href="https://a.basemaps.cartocdn.com" crossorigin />
+
+  <!-- Leaflet Map CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
+
+  <link rel="stylesheet" href="css/common.css?v=3" />
+  <link rel="stylesheet" href="css/index.css?v=2" />
+</head>
+<body>
+
+<div class="site-container">
+
+  <!-- ── Architectural Drawing Background Grid & SVGs ── -->
+  <div class="architectural-bg" aria-hidden="true">
+    <!-- SVG blueprints float subtly -->
+    <svg class="blueprint-svg blueprint-truss" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+      <!-- Structural Truss Bridge Drawing -->
+      <path class="blueprint-line" d="M 50,350 L 750,350 M 50,350 L 50,300 L 150,200 L 250,200 L 350,100 L 450,100 L 550,200 L 650,200 L 750,300 L 750,350" />
+      <path class="blueprint-line" d="M 50,300 L 750,300 M 150,350 L 150,200 M 250,350 L 250,200 M 350,350 L 350,100 M 450,350 L 450,100 M 550,350 L 550,200 M 650,350 L 650,200" />
+      <path class="blueprint-line" d="M 50,350 L 150,300 L 250,350 L 350,300 L 450,350 L 550,300 L 650,350 L 750,300" />
+      <path class="blueprint-line" d="M 50,300 L 150,350 L 250,300 L 350,350 L 450,300 L 550,350 L 650,300 L 750,350" />
+      <!-- Dimension Lines -->
+      <path class="blueprint-dim" d="M 50,370 L 750,370 M 50,365 L 50,375 M 750,365 L 750,375" />
+      <text class="blueprint-text" x="400" y="385" text-anchor="middle">L = 120.00 m</text>
+      <path class="blueprint-dim" d="M 30,300 L 30,350 M 25,300 L 35,300 M 25,350 L 35,350" />
+      <text class="blueprint-text" x="15" y="330" text-anchor="middle" transform="rotate(-90 15 330)">H = 8.50 m</text>
+    </svg>
+
+    <svg class="blueprint-svg blueprint-plan" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+      <!-- Building Floor Plan Block -->
+      <rect class="blueprint-line" x="100" y="100" width="400" height="300" rx="10" />
+      <line class="blueprint-line" x1="250" y1="100" x2="250" y2="400" />
+      <line class="blueprint-line" x1="100" y1="250" x2="500" y2="250" />
+      <!-- Interior Walls/Details -->
+      <rect class="blueprint-dash" x="120" y="120" width="100" height="100" />
+      <rect class="blueprint-dash" x="270" y="120" width="200" height="100" />
+      <!-- Structural Columns -->
+      <rect class="blueprint-solid" x="95" y="95" width="10" height="10" />
+      <rect class="blueprint-solid" x="245" y="95" width="10" height="10" />
+      <rect class="blueprint-solid" x="495" y="95" width="10" height="10" />
+      <rect class="blueprint-solid" x="95" y="245" width="10" height="10" />
+      <rect class="blueprint-solid" x="245" y="245" width="10" height="10" />
+      <rect class="blueprint-solid" x="495" y="245" width="10" height="10" />
+      <rect class="blueprint-solid" x="95" y="395" width="10" height="10" />
+      <rect class="blueprint-solid" x="245" y="395" width="10" height="10" />
+      <rect class="blueprint-solid" x="495" y="395" width="10" height="10" />
+      <!-- Radial grid marks -->
+      <circle class="blueprint-dim" cx="250" cy="250" r="180" stroke-dasharray="5 5" />
+      <path class="blueprint-dim" d="M 250,250 L 400,350 M 250,250 L 100,350" />
+      <!-- Dimension indicators -->
+      <text class="blueprint-text" x="300" y="280">DETALHE SECCIONAL A-A</text>
+      <text class="blueprint-text" x="150" y="430">PLANTA BAIXA - TIPO</text>
+    </svg>
+    
+    <svg class="blueprint-svg blueprint-compass" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+      <!-- Drafting Compass/Grid Marks -->
+      <circle class="blueprint-dim" cx="200" cy="200" r="150" />
+      <circle class="blueprint-dim" cx="200" cy="200" r="100" />
+      <line class="blueprint-dim" x1="200" y1="20" x2="200" y2="380" />
+      <line class="blueprint-dim" x1="20" y1="200" x2="380" y2="200" />
+      <path class="blueprint-line" d="M 200,200 L 320,120 M 200,200 L 280,280" />
+      <path class="blueprint-dim" d="M 200,200 A 120,120 0 0,0 320,120" fill="none" stroke-dasharray="4 4" />
+      <text class="blueprint-text" x="330" y="115">θ = 36.45°</text>
+      <text class="blueprint-text" x="210" y="40">N</text>
+      <text class="blueprint-text" x="370" y="215">E</text>
+    </svg>
+  </div>
+
+  <!-- ── Interconnected Animated Background Wave (spans 200vh) ── -->
+  <div class="interconnected-bg" aria-hidden="true">
+    <svg class="interconnected-svg" viewBox="0 0 1921 2482.59" preserveAspectRatio="none"
+         xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <!-- Animated linear gradient -->
+        <linearGradient id="waveGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop id="waveStop1" offset="0%"   stop-color="#193450"/>
+          <stop id="waveStop2" offset="35%"  stop-color="#1b5f90"/>
+          <stop id="waveStop3" offset="70%"  stop-color="#1ea8fc"/>
+          <stop id="waveStop4" offset="100%" stop-color="#193450"/>
+        </linearGradient>
+
+        <!-- Radial highlight for depth -->
+        <radialGradient id="waveHighlight" cx="30%" cy="30%" r="70%">
+          <stop offset="0%"   stop-color="#4dc3ff" stop-opacity="0.35"/>
+          <stop offset="100%" stop-color="#193450" stop-opacity="0"/>
+        </radialGradient>
+
+        <!-- Metallic shimmer gradient with animated offsets -->
+        <linearGradient id="shimmerGrad" x1="-100%" y1="-100%" x2="0%" y2="0%">
+          <stop offset="0%" stop-color="#ffffff" stop-opacity="0"/>
+          <stop offset="50%" stop-color="#ffffff" stop-opacity="0.35"/>
+          <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+          <animate attributeName="x1" from="-100%" to="200%" dur="4s" repeatCount="indefinite" />
+          <animate attributeName="y1" from="-100%" to="200%" dur="4s" repeatCount="indefinite" />
+          <animate attributeName="x2" from="0%" to="300%" dur="4s" repeatCount="indefinite" />
+          <animate attributeName="y2" from="0%" to="300%" dur="4s" repeatCount="indefinite" />
+        </linearGradient>
+
+        <clipPath id="waveClip">
+          <path d="M1920.3,1584.93c.7,311.49,1.69,756.07.7,746.99-17.19-157.24,0-723.85-533.85-963.56-113.99-51.18-323.94-112.56-505.74-136.87C504.37,1181.09.3,1281.54.3,1296.62.3,1418.48.3,171.93.3,38.28c0,0,11.27,137.74,32.3,226.29,385.23,1622.4,1886.43,715.96,1887.7,719.28,8.03,21.04-.96,174.53,0,601.08Z"/>
+        </clipPath>
+      </defs>
+
+      <!-- Base filled wave shape -->
+      <path
+        d="M1920.3,1584.93c.7,311.49,1.69,756.07.7,746.99-17.19-157.24,0-723.85-533.85-963.56-113.99-51.18-323.94-112.56-505.74-136.87C504.37,1181.09.3,1281.54.3,1296.62.3,1418.48.3,171.93.3,38.28c0,0,11.27,137.74,32.3,226.29,385.23,1622.4,1886.43,715.96,1887.7,719.28,8.03,21.04-.96,174.53,0,601.08Z"
+        fill="url(#waveGrad)"
+      />
+
+      <!-- Radial highlight layer -->
+      <path
+        d="M1920.3,1584.93c.7,311.49,1.69,756.07.7,746.99-17.19-157.24,0-723.85-533.85-963.56-113.99-51.18-323.94-112.56-505.74-136.87C504.37,1181.09.3,1281.54.3,1296.62.3,1418.48.3,171.93.3,38.28c0,0,11.27,137.74,32.3,226.29,385.23,1622.4,1886.43,715.96,1887.7,719.28,8.03,21.04-.96,174.53,0,601.08Z"
+        fill="url(#waveHighlight)"
+      />
+
+      <!-- Animated Shimmer Layer masked to the shape -->
+      <path
+        d="M1920.3,1584.93c.7,311.49,1.69,756.07.7,746.99-17.19-157.24,0-723.85-533.85-963.56-113.99-51.18-323.94-112.56-505.74-136.87C504.37,1181.09.3,1281.54.3,1296.62.3,1418.48.3,171.93.3,38.28c0,0,11.27,137.74,32.3,226.29,385.23,1622.4,1886.43,715.96,1887.7,719.28,8.03,21.04-.96,174.53,0,601.08Z"
+        fill="url(#shimmerGrad)"
+      />
+
+
+
+      <!-- White border line along the hero curve -->
+      <path
+        d="M0.3,38.28s11.27,137.74,32.3,226.29c385.23,1622.4,1886.43,715.96,1887.7,719.28"
+        fill="none"
+        stroke="#ffffff"
+        stroke-width="3"
+        opacity="0.85"
+      />
+
+      <!-- White border line along the bottom curve -->
+      <path
+        d="M1920.3,1584.93c.7,311.49,1.69,756.07.7,746.99-17.19-157.24,0-723.85-533.85-963.56-113.99-51.18-323.94-112.56-505.74-136.87C504.37,1181.09.3,1281.54.3,1296.62"
+        fill="none"
+        stroke="#ffffff"
+        stroke-width="3"
+        opacity="0.85"
+      />
+    </svg>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════
+       PAGE 1: HERO SECTION
+       ════════════════════════════════════════════════════════════ -->
+  <!-- ── Global Sticky Navigation ──────────────────────────────────────── -->
+  <nav class="nav-bar" role="navigation" aria-label="Main navigation">
+    <a href="#" class="nav-logo" aria-label="JDI – Página Inicial">
+      <img src="Assets/Jdi-promo.svg?v=5" alt="JDI Sociedade Unipessoal, LDA" />
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#hero" class="active">Início</a></li>
+      <li><a href="#about-us">Sobre</a></li>
+      <li><a href="#project-map-section">Mapa</a></li>
+      <li><a href="#services">Serviços</a></li>
+      <li><a href="portfolio.html">Portfólio</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="orcamento.html">Orçamento</a></li>
+      <li><a href="#contacts">Contactos</a></li>
+    </ul>
+  </nav>
+
+  <main class="hero-wrapper" id="hero">
+
+    <!-- ── Hero Main Content ───────────────────────────────────── -->
+    <section class="hero-content" id="hero-content" aria-label="Hero section">
+
+      <!-- Main Vectorized Logo -->
+      <img
+        class="hero-logo-mark"
+        src="Assets/vectorized-logo.svg"
+        alt="JDI – Sociedade Unipessoal, LDA"
+      />
+
+      <!-- Portfolio / Brand Text Section -->
+      <div class="portfolio-section">
+
+        <span class="portfolio-eyebrow">Portfólio de Impacto Global</span>
+
+        <h1 class="portfolio-headline">
+          Cada projecto,<br/>
+          uma <span class="accent">nova história</span>.
+        </h1>
+
+        <div class="portfolio-ctas">
+          <a href="#contacts" id="cta-contact" class="btn-primary">
+            Entrar em Contacto
+          </a>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ── Stats Strip ─────────────────────────────────────────── -->
+    <div class="stats-strip" aria-label="Estatísticas da empresa">
+      <div class="stat-item">
+        <span class="stat-value">+15</span>
+        <span class="stat-label">Anos de Experiência</span>
+      </div>
+      <div class="stat-divider" aria-hidden="true"></div>
+      <div class="stat-item">
+        <span class="stat-value">+25</span>
+        <span class="stat-label">Projetos Concluídos</span>
+      </div>
+      <div class="stat-divider" aria-hidden="true"></div>
+      <div class="stat-item">
+        <span class="stat-value">100%</span>
+        <span class="stat-label">Compromisso & Qualidade</span>
+      </div>
+      <div class="stat-divider" aria-hidden="true"></div>
+      <div class="stat-item">
+        <span class="stat-value">MZ</span>
+        <span class="stat-label">Baseados em Moçambique</span>
+      </div>
+    </div>
+
+    <!-- ── Footer URL ──────────────────────────────────────────── -->
+    <a href="https://www.jdi.co.mz" class="footer-url" id="footer-url" target="_blank" rel="noopener" aria-label="Visitar website JDI">
+      www.jdi.co.mz
+    </a>
+
+  </main>
+
+  <!-- ════════════════════════════════════════════════════════════
+       PAGE 2: ABOUT US / HIGHLIGHTS SECTION
+       ════════════════════════════════════════════════════════════ -->
+  <section class="about-us-wrapper" id="about-us" aria-label="Sobre nós e destaques">
+
+    <!-- Left Column: Highlights Carousel -->
+    <div class="highlights-column" id="portfolio">
+      <span class="highlights-title">Destaques do Portfólio</span>
+      
+      <div class="carousel-container">
+
+        <!-- Carousel Slide Cards -->
+        <div class="carousel-card active" data-index="0">
+          <div class="card-project-type">Infraestruturas Sociais</div>
+          <h3 class="card-title">Complexos Escolares de Grande Escala</h3>
+          <p class="card-description">Construção de complexos escolares modernos com salas de aula equipadas, blocos administrativos e áreas de lazer, em conformidade com as normas internacionais da UNOPS.</p>
+          <div class="card-footer">
+            <span class="card-location">Gaza e Inhambane</span>
+          </div>
+        </div>
+
+        <div class="carousel-card" data-index="1">
+          <div class="card-project-type">Habitação Social</div>
+          <h3 class="card-title">Habitações de Interesse Social</h3>
+          <p class="card-description">Projetos habitacionais sustentáveis e acessíveis, focados na durabilidade estrutural e no bem-estar comunitário para populações reassentadas.</p>
+          <div class="card-footer">
+            <span class="card-location">Maputo e Beira</span>
+          </div>
+        </div>
+
+        <div class="carousel-card" data-index="2">
+          <div class="card-project-type">Sistemas de Água</div>
+          <h3 class="card-title">Sistemas de Abastecimento de Água</h3>
+          <p class="card-description">Perfuração de furos comerciais e implementação de redes de distribuição de água potável alimentadas por energia solar para comunidades vulneráveis.</p>
+          <div class="card-footer">
+            <span class="card-location">Tete e Nampula</span>
+          </div>
+        </div>
+
+        <div class="carousel-card" data-index="3">
+          <div class="card-project-type">Infraestruturas Desportivas</div>
+          <h3 class="card-title">Infraestruturas Desportivas e Parques</h3>
+          <p class="card-description">Construção de campos multiusos e recintos desportivos escolares com relva sintética, iluminação moderna e vedações de alta segurança.</p>
+          <div class="card-footer">
+            <span class="card-location">Maputo Cidade</span>
+          </div>
+        </div>
+
+        <div class="carousel-card" data-index="4">
+          <div class="card-project-type">Construção Civil Premium</div>
+          <h3 class="card-title">Condomínios & Moradias de Luxo</h3>
+          <p class="card-description">Concepção e edificação de residências privadas de alto padrão com acabamentos premium, integrando elegância arquitectónica e segurança estrutural.</p>
+          <div class="card-footer">
+            <span class="card-location">Bairro do Triunfo & Sommerschield</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Carousel dots -->
+      <div class="carousel-dots">
+        <span class="dot active" onclick="goToSlide(0)" aria-label="Slide 1"></span>
+        <span class="dot" onclick="goToSlide(1)" aria-label="Slide 2"></span>
+        <span class="dot" onclick="goToSlide(2)" aria-label="Slide 3"></span>
+        <span class="dot" onclick="goToSlide(3)" aria-label="Slide 4"></span>
+        <span class="dot" onclick="goToSlide(4)" aria-label="Slide 5"></span>
+      </div>
+
+      <!-- Full Portfolio CTA Link -->
+      <div style="text-align: center;">
+        <a href="portfolio.html" class="btn-light-outline" aria-label="Ver todos os projectos no portfólio completo">
+          Ver Portfólio Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- Right Column: About Us Copy -->
+    <div class="about-column">
+      <span class="about-title">Sobre Nós</span>
+      <h2 class="about-headline">Construindo Juntos o Amanhã com Segurança e Confiança</h2>
+      <p class="about-text">
+        Na JDI, acreditamos que a engenharia de precisão tem o poder de transformar vidas. Em estreita colaboração com parceiros de prestígio internacional como a UNOPS, dedicamo-nos a erguer complexos escolares modernos, habitações dignas e sistemas sustentáveis de água potável. Cada projeto que abraçamos é guiado pelo rigor técnico, segurança absoluta e pelo compromisso genuíno de contribuir para o desenvolvimento sustentável de Moçambique.
+      </p>
+      <div class="about-showcase-img">
+        <img loading="lazy" src="Assets/incubadora-negocios-namuapala.webp" alt="Incubadora de Negócios Namuapala" />
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════
+       PAGE 2.5: MAP SECTION
+       ════════════════════════════════════════════════════════════ -->
+  <section class="map-section-wrapper" id="project-map-section" aria-label="Mapa de Projectos e Obras">
+    <div class="map-section-header">
+      <span class="map-subtitle">Presença Nacional</span>
+      <h2 class="map-main-headline">A Nossa Presença no Terreno</h2>
+      <p class="map-intro-text">
+        Estamos presentes onde o progresso é necessário. Navegue pelo mapa interativo ou use a barra de pesquisa ao lado para descobrir as nossas obras, furos de água e complexos sociais concluídos ou em execução em diversas províncias de Moçambique.
+      </p>
+    </div>
+    
+    <div class="map-interactive-container">
+      <!-- Left Column: Map -->
+      <div class="map-canvas-container">
+        <div id="homepage-map"></div>
+      </div>
+      
+      <!-- Right Column: Sidebar -->
+      <div class="map-directory-card">
+        <div class="directory-search-box">
+          <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <input type="text" id="project-search" placeholder="Pesquisar projectos por nome, local..." />
+        </div>
+        <div class="directory-list-container">
+          <ul id="directory-list" class="directory-list">
+            <!-- Dynamic list items will be injected by JavaScript -->
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════
+       PAGE 3: SERVICES SECTION
+       ════════════════════════════════════════════════════════════ -->
+  <section class="services-wrapper" id="services" aria-label="Nossos Serviços">
+    <div class="services-header">
+      <span class="services-subtitle">Nossos Serviços</span>
+      <h2 class="services-main-headline">Soluções Completas de Engenharia e Construção</h2>
+      <p class="services-intro-text">
+        Oferecemos um leque abrangente de serviços técnicos para transformar a sua visão em realidade. Combinamos inovação, conformidade regulamentar e responsabilidade socioambiental para entregar obras robustas e duradouras.
+      </p>
+    </div>
+
+    <div class="services-grid">
+      <!-- Card 1 -->
+      <div class="service-card">
+        <div class="service-icon-wrapper" aria-hidden="true">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+          </svg>
+        </div>
+        <h3 class="service-title">Construção Civil & Obras Públicas</h3>
+        <p class="service-desc">
+          Edificação e reabilitação de complexos escolares, centros comunitários, habitações de interesse social e edifícios institucionais com máxima qualidade e prazos assegurados.
+        </p>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="service-card">
+        <div class="service-icon-wrapper" aria-hidden="true">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
+          </svg>
+        </div>
+        <h3 class="service-title">Projetos de Engenharia & Desenho</h3>
+        <p class="service-desc">
+          Estudos topográficos de precisão, cálculo estrutural de alta fidelidade e planeamento integrado para sistemas hidráulicos, redes elétricas e drenagem pluvial.
+        </p>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="service-card">
+        <div class="service-icon-wrapper" aria-hidden="true">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+          </svg>
+        </div>
+        <h3 class="service-title">Sistemas Hidráulicos & Distribuição</h3>
+        <p class="service-desc">
+          Furos de água potável sustentáveis de alto débito, instalação de sistemas de bombagem solar ecoeficientes e redes de distribuição integradas com controlo rigoroso da qualidade da água.
+        </p>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="service-card">
+        <div class="service-icon-wrapper" aria-hidden="true">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+          </svg>
+        </div>
+        <h3 class="service-title">Vistorias Técnicas & Consultoria</h3>
+        <p class="service-desc">
+          Peritagens estruturais, emissão de relatórios de conformidade técnica, consultoria de projetos civis e elaboração de orçamentos transparentes e competitivos.
+        </p>
+      </div>
+    </div>
+
+    <!-- Quality Policy -->
+    <div class="quality-section">
+      <h3 class="quality-headline">Política de Qualidade JDI</h3>
+      <div class="quality-grid">
+        <div class="quality-item">
+          <div class="quality-num">1</div>
+          <h4 class="quality-title">Segurança em Primeiro Lugar</h4>
+          <p class="quality-desc">Cuidamos da saúde e integridade física de todos os colaboradores através de formação contínua e conformidade HSE.</p>
+        </div>
+        <div class="quality-item">
+          <div class="quality-num">2</div>
+          <h4 class="quality-title">Foco nas Suas Necessidades</h4>
+          <p class="quality-desc">Garantimos soluções à medida, cumprindo à risca as especificações e superando os objetivos definidos.</p>
+        </div>
+        <div class="quality-item">
+          <div class="quality-num">3</div>
+          <h4 class="quality-title">Pontualidade & Agilidade</h4>
+          <p class="quality-desc">Valorizamos o seu tempo. Gerimos as obras com processos ágeis para garantir entregas pontuais sem descurar o rigor.</p>
+        </div>
+        <div class="quality-item">
+          <div class="quality-num">4</div>
+          <h4 class="quality-title">Orçamentos Sustentáveis</h4>
+          <p class="quality-desc">Otimizamos o uso de recursos e materiais para proporcionar o melhor custo-benefício e viabilidade financeira ao projeto.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════
+       PAGE 4: CONTACTS & FOOTER SECTION
+       ════════════════════════════════════════════════════════════ -->
+  <section class="contacts-wrapper" id="contacts" aria-label="Contacte-nos">
+    <div class="contacts-main-grid">
+      <!-- Left Column: Form -->
+      <div class="contact-form-card">
+        <h3 class="contacts-headline" style="margin-bottom: 24px;">Envie-nos uma Mensagem</h3>
+        <form action="https://formsubmit.co/info@jdimoz.com" method="POST" id="contact-form">
+          <!-- FormSubmit configuration -->
+          <input type="hidden" name="_subject" value="Novo contacto do site JDI" />
+          <input type="hidden" name="_captcha" value="false" />
+
+          <div class="form-group">
+            <label class="form-label" for="form-name">Nome Completo</label>
+            <input class="form-input" type="text" id="form-name" name="name" placeholder="Ex: João Silva" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="form-email">Endereço de E-mail</label>
+            <input class="form-input" type="email" id="form-email" name="email" placeholder="Ex: info@jdi.co.mz" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="form-phone">Telefone</label>
+            <input class="form-input" type="tel" id="form-phone" name="phone" placeholder="Ex: +258 84 315 2950" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="form-message">Mensagem / Pedido</label>
+            <textarea class="form-input" id="form-message" name="message" placeholder="Como podemos ajudar no seu projeto?" required></textarea>
+          </div>
+          <button type="submit" class="btn-primary btn-submit">Enviar Mensagem</button>
+        </form>
+      </div>
+
+      <!-- Right Column: Details -->
+      <div class="contacts-info-column">
+        <span class="contacts-tag">Contactos</span>
+        <h3 class="contacts-headline">Vamos Construir Juntos</h3>
+        
+        <div class="contacts-detail-block">
+          <!-- Row 1: Sommerschield -->
+          <div class="contact-item-row">
+            <div class="contact-item-icon" aria-hidden="true">
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+            </div>
+            <div class="contact-item-text">
+              <span class="contact-item-label">Sede Maputo</span>
+              <span class="contact-item-value">Rua da Frelimo 103, 1º Andar, Sommerschield, Cidade de Maputo</span>
+            </div>
+          </div>
+
+          <!-- Row 2: Matola -->
+          <div class="contact-item-row">
+            <div class="contact-item-icon" aria-hidden="true">
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+              </svg>
+            </div>
+            <div class="contact-item-text">
+              <span class="contact-item-label">Filial Matola</span>
+              <span class="contact-item-value">Rua dos Heróis Moçambicanos, nr 254, Matola C, Província de Maputo</span>
+            </div>
+          </div>
+
+          <!-- Row 3: Phone -->
+          <div class="contact-item-row">
+            <div class="contact-item-icon" aria-hidden="true">
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+              </svg>
+            </div>
+            <div class="contact-item-text">
+              <span class="contact-item-label">Telefones</span>
+              <span class="contact-item-value">
+                <a href="tel:+258843152950">+258 84 315 2950</a> / <a href="tel:+258833454221">+258 83 345 4221</a>
+              </span>
+            </div>
+          </div>
+
+          <!-- Row 4: Email -->
+          <div class="contact-item-row">
+            <div class="contact-item-icon" aria-hidden="true">
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+              </svg>
+            </div>
+            <div class="contact-item-text">
+              <span class="contact-item-label">E-mail Comercial</span>
+              <span class="contact-item-value">
+                <a href="mailto:info@jdimoz.com">info@jdimoz.com</a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Row -->
+    <footer class="site-footer">
+      <p>&copy; 2026 JDI – Sociedade Unipessoal, LDA. Todos os direitos reservados.</p>
+      <div class="footer-right">
+        <a href="#hero">Início</a>
+        <a href="#about-us">Sobre</a>
+        <a href="#services">Serviços</a>
+        <a href="portfolio.html">Portfólio</a>
+        <a href="blog.html">Blog</a>
+        <a href="orcamento.html">Orçamento</a>
+        <a href="#contacts">Contactos</a>
+      </div>
+    </footer>
+  </section>
+
+</div>
+
+  <!-- ── Project Details Modal ──────────────────────────────── -->
+  <div class="project-modal" id="project-modal" aria-hidden="true" role="dialog">
+    <div class="modal-backdrop" onclick="closeProjectModal()"></div>
+    <div class="modal-container">
+      <button class="modal-close" onclick="closeProjectModal()" aria-label="Fechar Modal">&times;</button>
+      <div class="modal-hero">
+        <img loading="lazy" id="modal-img" src="" alt="Project Image" />
+      </div>
+      <div class="modal-body">
+        <div class="modal-meta">
+          <span class="status-badge" id="modal-status"></span>
+          <span class="category-label" id="modal-category"></span>
+        </div>
+        <h2 class="modal-title" id="modal-title"></h2>
+        <p class="modal-description" id="modal-desc"></p>
+        
+        <div class="modal-details-grid">
+          <div class="modal-detail-item">
+            <span class="modal-detail-label">Dono da Obra:</span>
+            <span class="modal-detail-val" id="modal-client"></span>
+          </div>
+          <div class="modal-detail-item">
+            <span class="modal-detail-label">Localização:</span>
+            <span class="modal-detail-val" id="modal-location"></span>
+          </div>
+        </div>
+
+      <!-- Gallery Section for additional pictures -->
+      <div class="modal-gallery-section" id="modal-gallery-section" style="display: none; margin-top: 28px; margin-bottom: 28px;">
+        <h4 style="font-family: var(--body-font); font-size: 1.05rem; font-weight: 700; color: var(--jdi-navy); margin-bottom: 12px;">Imagens Adicionais</h4>
+        <div class="modal-gallery-container">
+          <div class="modal-gallery-slider" id="modal-gallery-slider"></div>
+          <div class="modal-gallery-dots" id="modal-gallery-dots"></div>
+        </div>
+      </div>
+
+      <div class="modal-insights">
+          <h4>Ficha Técnica & Impacto</h4>
+          <ul id="modal-insights-list"></ul>
+        </div>
+        
+        <div class="modal-actions" style="margin-top: 28px; display: flex; justify-content: flex-end;">
+          <a href="" id="modal-portfolio-cta" class="btn-primary" style="font-size: 0.82rem; padding: 10px 24px; text-decoration: none;">Ver no Portfólio Completo &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Fullscreen Image Lightbox -->
+<div class="image-lightbox" id="image-lightbox" aria-hidden="true" role="dialog">
+  <div class="lightbox-backdrop" onclick="closeLightbox()"></div>
+  <button class="lightbox-close" onclick="closeLightbox()" aria-label="Fechar Visualização">&times;</button>
+  <button class="lightbox-prev" onclick="lightboxPrev()" aria-label="Imagem Anterior">&lsaquo;</button>
+  <div class="lightbox-content">
+    <img id="lightbox-img" src="" alt="Imagem Ampliada" />
+  </div>
+  <button class="lightbox-next" onclick="lightboxNext()" aria-label="Próxima Imagem">&rsaquo;</button>
+</div>
+
+<!-- Analytics & Global Tracking JavaScript -->
+<script src="js/analytics.js" charset="utf-8" defer></script>
+<!-- Carousel Controls JavaScript -->
+<script src="js/index.js?v=6" charset="utf-8" defer></script>
+
+</body>
+</html>

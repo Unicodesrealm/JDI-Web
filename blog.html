@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog & Artigos | JDI – Sociedade Unipessoal, LDA</title>
+  <meta name="description" content="Acompanhe as novidades, artigos técnicos e compromissos sociais da JDI na construção de um futuro mais inclusivo em Moçambique." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/common.css?v=4" />
+  <link rel="stylesheet" href="css/blog.css?v=8" />
+</head>
+<body>
+
+<div class="site-container">
+
+  <!-- ── Architectural Drawing Background Grid & SVGs ── -->
+  <div class="architectural-bg" aria-hidden="true">
+    <!-- SVG blueprints float subtly -->
+    <svg class="blueprint-svg blueprint-truss" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+      <path class="blueprint-line" d="M 50,350 L 750,350 M 50,350 L 50,300 L 150,200 L 250,200 L 350,100 L 450,100 L 550,200 L 650,200 L 750,300 L 750,350" />
+      <path class="blueprint-line" d="M 50,300 L 750,300 M 150,350 L 150,200 M 250,350 L 250,200 M 350,350 L 350,100 M 450,350 L 450,100 M 550,350 L 550,200 M 650,350 L 650,200" />
+      <path class="blueprint-line" d="M 50,350 L 150,300 L 250,350 L 350,300 L 450,350 L 550,300 L 650,350 L 750,300" />
+      <path class="blueprint-line" d="M 50,300 L 150,350 L 250,300 L 350,350 L 450,300 L 550,350 L 650,300 L 750,350" />
+      <path class="blueprint-dim" d="M 50,370 L 750,370 M 50,365 L 50,375 M 750,365 L 750,375" />
+      <text class="blueprint-text" x="400" y="385" text-anchor="middle">L = 120.00 m</text>
+    </svg>
+
+    <svg class="blueprint-svg blueprint-plan" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+      <rect class="blueprint-line" x="100" y="100" width="400" height="300" rx="10" />
+      <line class="blueprint-line" x1="250" y1="100" x2="250" y2="400" />
+      <line class="blueprint-line" x1="100" y1="250" x2="500" y2="250" />
+      <rect class="blueprint-dash" x="120" y="120" width="100" height="100" />
+      <rect class="blueprint-dash" x="270" y="120" width="200" height="100" />
+      <rect class="blueprint-solid" x="95" y="95" width="10" height="10" />
+      <rect class="blueprint-solid" x="245" y="95" width="10" height="10" />
+      <rect class="blueprint-solid" x="495" y="95" width="10" height="10" />
+      <circle class="blueprint-dim" cx="250" cy="250" r="180" stroke-dasharray="5 5" />
+      <text class="blueprint-text" x="150" y="430">PLANTA BAIXA - TIPO</text>
+    </svg>
+  </div>
+
+  <!-- ── Navigation Bar ─────────────────────────────────────────── -->
+  <nav class="nav-bar" role="navigation" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo" aria-label="JDI – Página Inicial">
+      <img src="Assets/Jdi-promo.svg?v=5" alt="JDI Sociedade Unipessoal, LDA Logo" />
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="index.html#hero">Início</a></li>
+      <li><a href="index.html#about-us">Sobre</a></li>
+      <li><a href="index.html#project-map-section">Mapa</a></li>
+      <li><a href="index.html#services">Serviços</a></li>
+      <li><a href="portfolio.html">Portfólio</a></li>
+      <li><a href="blog.html" class="active">Blog</a></li>
+      <li><a href="orcamento.html">Orçamento</a></li>
+      <li><a href="index.html#contacts">Contactos</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── Hero Header ────────────────────────────────────────────── -->
+  <header class="blog-hero">
+    <div class="hero-container">
+      <span class="hero-eyebrow">Artigos & Destaques</span>
+      <h1 class="hero-title">Siga os Nossos <span>Últimos Passos</span></h1>
+      <p class="hero-desc">
+        Acompanhe os nossos artigos sobre inovação na engenharia, responsabilidade comunitária, eventos sociais corporativos e os bastidores das nossas obras em Moçambique.
+      </p>
+    </div>
+  </header>
+
+  <!-- ── Blog Articles Section ──────────────────────────────────── -->
+  <main class="blog-container">
+
+    <!-- Featured Post -->
+    <article class="featured-card no-grayscale" onclick="openArticleModal('lugar-de-mulher')" aria-label="Ler artigo: Lugar de Mulher é Onde Ela Quiser">
+      <div class="featured-img-wrapper">
+        <img loading="lazy" src="Assets/Inclusividade-feminina-1.jpeg" alt="Engajamento feminino na construção civil" />
+      </div>
+      <div class="featured-content">
+        <div class="post-meta">
+          <span class="post-tag">Inclusão Social</span>
+        </div>
+        <h2 class="post-title">Lugar de Mulher é Onde Ela Quiser</h2>
+        <p class="post-excerpt">
+          Na JDI, valorizamos e incentivamos o engajamento feminino, reconhecendo o papel essencial das mulheres na construção civil. Com talento, determinação e profissionalismo, elas contribuem para um futuro mais inclusivo.
+        </p>
+        <span class="btn-read">
+          Ler Artigo Completo
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </span>
+      </div>
+    </article>
+
+    <!-- Secondary Articles Grid -->
+    <section class="articles-grid">
+      <!-- Secondary Card 1 -->
+      <article class="blog-card" onclick="openArticleModal('sistemas-de-agua')" aria-label="Ler artigo: Sustentabilidade no Abastecimento de Água">
+        <div class="blog-card-img">
+          <img loading="lazy" src="Assets/project-water-system.webp" alt="Sistemas de abastecimento de água potável" />
+        </div>
+        <div class="blog-card-body">
+          <div class="post-meta" style="margin-bottom: 12px;">
+            <span class="post-tag" style="color:#10b981; background:rgba(16,185,129,0.08); border-color:rgba(16,185,129,0.2);">Inovação</span>
+          </div>
+          <h3 class="blog-card-title">Sistemas Ecoeficientes de Água Potável</h3>
+          <p class="blog-card-excerpt">
+            Como furos artesianos e bombagem solar off-grid estão a criar resiliência hídrica e a apoiar comunidades rurais in províncias vulneráveis.
+          </p>
+          <span class="btn-read" style="font-size:0.82rem;">
+            Ler Artigo &rarr;
+          </span>
+        </div>
+      </article>
+
+      <!-- Secondary Card 2 -->
+      <article class="blog-card" onclick="openArticleModal('habitacao-sustentavel')" aria-label="Ler artigo: Desenho Ecoeficiente em Habitações Sociais">
+        <div class="blog-card-img">
+          <img loading="lazy" src="Assets/24-habitacoes-sociais-mecufi.webp" alt="Habitações de interesse social in Mecufi" />
+        </div>
+        <div class="blog-card-body">
+          <div class="post-meta" style="margin-bottom: 12px;">
+            <span class="post-tag" style="color:var(--jdi-blue); background:rgba(27,95,144,0.08); border-color:rgba(27,95,144,0.2);">Habitação</span>
+          </div>
+          <h3 class="blog-card-title">Desenho Ecoeficiente em Habitações Sociais</h3>
+          <p class="blog-card-excerpt">
+            Uma análise sobre a integração de técnicas de conforto térmico passivo e planeamento modular em moradias de baixo custo no norte de Moçambique.
+          </p>
+          <span class="btn-read" style="font-size:0.82rem;">
+            Ler Artigo &rarr;
+          </span>
+        </div>
+      </article>
+
+      <!-- Secondary Card 3 -->
+      <article class="blog-card" onclick="openArticleModal('incubadora-namuapala')" aria-label="Ler artigo: Força Colectiva na Incubadora de Namuapala">
+        <div class="blog-card-img">
+          <img loading="lazy" src="Assets/Namuapala-Team.jpeg" alt="Equipa do Projecto Namuapala" />
+        </div>
+        <div class="blog-card-body">
+          <div class="post-meta" style="margin-bottom: 12px;">
+            <span class="post-tag" style="color:var(--jdi-gold); background:rgba(249,173,10,0.08); border-color:rgba(249,173,10,0.2);">Equipa JDI</span>
+          </div>
+          <h3 class="blog-card-title">Força Colectiva: O Trabalho de Equipa em Namuapala</h3>
+          <p class="blog-card-excerpt">
+            Os bastidores e o empenho da equipa multidisciplinar da JDI na construção da Incubadora de Negócios sob supervisão da UNOPS em Cabo Delgado.
+          </p>
+          <span class="btn-read" style="font-size:0.82rem;">
+            Ler Artigo &rarr;
+          </span>
+        </div>
+      </article>
+    </section>
+
+  </main>
+
+  <!-- ── Footer ────────────────────────────────────────────────── -->
+  <section class="contacts-footer-section" id="footer-section" style="background: var(--jdi-navy); padding: 50px 5% 32px; color: #fff; margin-top: auto;">
+    <footer class="site-footer">
+      <p>&copy; 2026 JDI – Sociedade Unipessoal, LDA. Todos os direitos reservados.</p>
+      <div class="footer-right">
+        <a href="index.html#hero">Início</a>
+        <a href="index.html#about-us">Sobre</a>
+        <a href="index.html#services">Serviços</a>
+        <a href="portfolio.html">Portfólio</a>
+        <a href="blog.html">Blog</a>
+        <a href="orcamento.html">Orçamento</a>
+        <a href="index.html#contacts">Contactos</a>
+      </div>
+    </footer>
+  </section>
+
+</div>
+
+<!-- ── Article Reader Modal ────────────────────────────────────── -->
+<div class="article-modal" id="article-modal" aria-hidden="true" role="dialog">
+  <div class="modal-backdrop" onclick="closeArticleModal()"></div>
+  <div class="modal-container">
+    <button class="modal-close" onclick="closeArticleModal()" aria-label="Fechar Artigo">&times;</button>
+    <div class="modal-hero">
+      <img loading="lazy" id="modal-art-img" src="" alt="Imagem Principal do Artigo" />
+    </div>
+    <div class="modal-body">
+      <div class="modal-meta-top">
+        <span class="post-tag" id="modal-art-tag"></span>
+      </div>
+      <h2 class="modal-title" id="modal-art-title"></h2>
+      
+      <div class="modal-text-content" id="modal-art-content">
+        <!-- Injected via JS -->
+      </div>
+
+      <!-- Related Projects Links -->
+      <div class="related-projects-section" id="modal-related-projects" style="display:none; margin-top: 36px; margin-bottom: 24px; padding: 20px; background: rgba(30,168,252,0.03); border: 1px dashed rgba(30,168,252,0.2); border-radius: 16px;">
+        <h4 style="font-family: var(--body-font); font-size: 1rem; font-weight: 700; color: var(--jdi-navy); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; margin-top: 0;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:16px; height:16px; color: var(--jdi-cyan); flex-shrink:0;">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+          </svg>
+          Projectos de Portfólio Relacionados
+        </h4>
+        <div id="modal-related-links-container" style="display: flex; flex-direction: column; gap: 8px;">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+
+      <!-- Gallery / Shared Album grid -->
+      <div class="gallery-section" id="modal-gallery-sec" style="display:none;">
+        <h3>Álbum do Projecto: Inclusão Feminina</h3>
+        
+        <!-- iCloud Grid Album -->
+        <div class="icloud-album-grid" id="modal-album-grid">
+          <!-- Dynamically populated -->
+        </div>
+
+        <!-- Touch Slider/Carousel (Mobile fallback) -->
+        <div class="album-carousel-container">
+          <div class="album-carousel-slider" id="modal-carousel-slider">
+            <!-- Dynamically populated -->
+          </div>
+          <div class="album-carousel-dots" id="modal-carousel-dots">
+            <!-- Carousel dots -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Fullscreen Image Lightbox -->
+<div class="image-lightbox" id="image-lightbox" aria-hidden="true" role="dialog">
+  <div class="lightbox-backdrop" onclick="closeLightbox()"></div>
+  <button class="lightbox-close" onclick="closeLightbox()" aria-label="Fechar Visualização">&times;</button>
+  <button class="lightbox-prev" onclick="lightboxPrev()" aria-label="Imagem Anterior">&lsaquo;</button>
+  <div class="lightbox-content">
+    <img id="lightbox-img" src="" alt="Imagem Ampliada" />
+  </div>
+  <button class="lightbox-next" onclick="lightboxNext()" aria-label="Próxima Imagem">&rsaquo;</button>
+</div>
+
+<!-- Analytics & Global Tracking JavaScript -->
+<script src="js/analytics.js" charset="utf-8" defer></script>
+<script src="js/blog.js?v=13" charset="utf-8" defer></script>
+</body>
+</html>

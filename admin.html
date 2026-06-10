@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JDI Admin Redirect</title>
+  <script>
+    // Redirect to the main homepage with the admin query parameter
+    // Kept as index.html?admin to support local previews and file:// file system access
+    window.location.replace("index.html?admin");
+  </script>
+</head>
+<body style="background: #0a0f1d; color: #94a3b8; font-family: system-ui, sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; text-align: center;">
+  <div>
+    <div style="width: 32px; height: 32px; border: 2.5px solid rgba(255,255,255,0.1); border-top-color: #1ea8fc; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 16px;"></div>
+    <p style="font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase;">A redirecionar para o painel administrativo...</p>
+  </div>
+  <style>@keyframes spin { to { transform: rotate(360deg); } }</style>
+</body>
+</html>
