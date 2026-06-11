@@ -189,23 +189,23 @@
 
       // Mock calculator usages
       db.calculatorData.push(
-        { area: 120, location: 'base', standard: 'executivo', estimatedCost: 3840000, timestamp: now - 3600000 * 48, sessionId: 'sess_m1' },
-        { area: 180, location: 'logistic', standard: 'premium', estimatedCost: 8899200, timestamp: now - 3600000 * 24, sessionId: 'sess_m4' },
-        { area: 350, location: 'water', standard: 'luxo', estimatedCost: 27562500, timestamp: now - 3600000 * 10, sessionId: 'sess_m6' },
-        { area: 150, location: 'base', standard: 'executivo', estimatedCost: 4800000, timestamp: now - 1500000, sessionId: 'sess_m7' }
+        { area: 120, location: 'base', standard: 'executivo', estimatedCost: 1800000, timestamp: now - 3600000 * 48, sessionId: 'sess_m1' },
+        { area: 180, location: 'logistic', standard: 'premium', estimatedCost: 5562000, timestamp: now - 3600000 * 24, sessionId: 'sess_m4' },
+        { area: 350, location: 'water', standard: 'luxo', estimatedCost: 20212500, timestamp: now - 3600000 * 10, sessionId: 'sess_m6' },
+        { area: 150, location: 'base', standard: 'executivo', estimatedCost: 2250000, timestamp: now - 1500000, sessionId: 'sess_m7' }
       );
 
       // Mock leads
       db.leads.push(
         {
           source: 'Simulador',
-          details: { nome: 'João Macaringue', email: 'joao.mac@empresa.co.mz', telefone: '+258 84 123 4567', standard: 'Padrão Convencional', area: 120, custo: '3.840.000 MT', totalCost: 3840000 },
+          details: { nome: 'João Macaringue', email: 'joao.mac@empresa.co.mz', telefone: '+258 84 123 4567', standard: 'Padrão Convencional', area: 120, custo: '1.800.000 MT', totalCost: 1800000 },
           timestamp: now - 3600000 * 48,
           sessionId: 'sess_m1'
         },
         {
           source: 'Simulador',
-          details: { nome: 'Maria Langa', email: 'maria.langa@hotmail.com', telefone: '+258 82 890 1234', standard: 'Padrão Executivo', area: 180, custo: '8.899.200 MT', totalCost: 8899200 },
+          details: { nome: 'Maria Langa', email: 'maria.langa@hotmail.com', telefone: '+258 82 890 1234', standard: 'Padrão Executivo', area: 180, custo: '5.562.000 MT', totalCost: 5562000 },
           timestamp: now - 3600000 * 24,
           sessionId: 'sess_m4'
         },
