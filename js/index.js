@@ -309,7 +309,7 @@ let portfolioDoc = null;
 async function getPortfolioDoc() {
   if (portfolioDoc) return portfolioDoc;
   try {
-    const response = await fetch('portfolio.html?v=2');
+    const response = await fetch('projectos.html?v=2');
     const text = await response.text();
     const parser = new DOMParser();
     portfolioDoc = parser.parseFromString(text, 'text/html');
@@ -424,7 +424,7 @@ window.openProjectModalFromId = async function (projectId) {
   // Set CTA link to portfolio page
   const portfolioCta = document.getElementById('modal-portfolio-cta');
   if (portfolioCta) {
-    portfolioCta.href = `portfolio.html#${projectId}`;
+    portfolioCta.href = `projectos.html#${projectId}`;
   }
   
   // Configure Status Badge

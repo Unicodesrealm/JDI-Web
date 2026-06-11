@@ -172,12 +172,12 @@
       });
 
       // Mock Page Views
-      const pages = ['index.html', 'portfolio.html', 'blog.html', 'orcamento.html'];
+      const pages = ['index.html', 'projectos.html', 'blog.html', 'orcamento.html'];
       mockSessions.forEach(s => {
         // every session views index
         db.pageViews.push({ path: 'index.html', timestamp: s.startTime, sessionId: s.id });
         if (s.duration > 100) {
-          db.pageViews.push({ path: 'portfolio.html', timestamp: s.startTime + 60000, sessionId: s.id });
+          db.pageViews.push({ path: 'projectos.html', timestamp: s.startTime + 60000, sessionId: s.id });
         }
         if (s.duration > 200) {
           db.pageViews.push({ path: 'orcamento.html', timestamp: s.startTime + 120000, sessionId: s.id });
