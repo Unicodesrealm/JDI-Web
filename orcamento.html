@@ -605,78 +605,6 @@
               {step === 1 && (
                 <div key="step-1" className="animate-fade-in">
                     <span className="text-xs uppercase font-bold text-jdi-blue tracking-wider font-display">Passo 1 de 4</span>
-                    <h2 className="text-xl md:text-2xl font-display font-bold text-jdi-navy mt-1 mb-6">Onde será construído o seu projeto?</h2>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                      {Object.entries(locationModifiers).map(([key, data]) => (
-                        <div
-                          key={key}
-                          onClick={() => setLocation(key)}
-                          className={`border rounded-2xl p-6 cursor-pointer transition-all duration-300 flex flex-col justify-between min-h-[220px] glass-card-option ${
-                            location === key 
-                              ? 'border-jdi-blue bg-white/90 shadow-[0_8px_20px_rgba(27,95,144,0.06)] ring-1 ring-jdi-blue/20' 
-                              : 'border-white/40 hover:border-gray-300'
-                          }`}
-                        >
-                          <div>
-                            {data.icon}
-                            <h3 className="font-display font-bold text-base text-[#1d1d1f] mt-3 mb-1">{data.label}</h3>
-                            <p className="text-xs text-[#86868b] leading-relaxed">{data.desc}</p>
-                          </div>
-                          <div className="mt-6 flex items-center justify-between">
-                            <span className="text-xs font-semibold text-[#86868b]">Região</span>
-                            <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
-                              location === key ? 'border-jdi-blue bg-jdi-blue' : 'border-[#d2d2d7]'
-                            }`}>
-                              {location === key && <div className="w-2 h-2 rounded-full bg-white" />}
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {step === 2 && (
-                  <div key="step-2" className="animate-fade-in">
-                    <span className="text-xs uppercase font-bold text-jdi-blue tracking-wider font-display">Passo 2 de 4</span>
-                    <h2 className="text-xl md:text-2xl font-display font-bold text-jdi-navy mt-1 mb-6">Selecione o padrão de acabamento e sofisticação</h2>
-
-                    <div className="space-y-4">
-                      {Object.entries(standardRates).map(([key, data]) => (
-                        <div
-                          key={key}
-                          onClick={() => setStandard(key)}
-                          className={`border rounded-2xl p-6 cursor-pointer transition-all duration-300 flex flex-col md:flex-row md:items-center justify-between gap-6 glass-card-option ${
-                            standard === key 
-                              ? 'border-jdi-blue bg-white/90 shadow-[0_8px_20px_rgba(27,95,144,0.06)] ring-1 ring-jdi-blue/20' 
-                              : 'border-white/40 hover:border-gray-300'
-                          }`}
-                        >
-                          <div className="flex-1 flex items-start">
-                            {data.icon}
-                            <div>
-                              <h3 className="font-display font-bold text-base text-[#1d1d1f] mb-1">{data.label}</h3>
-                              <p className="text-xs text-[#86868b] leading-relaxed max-w-xl">{data.desc}</p>
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-6 justify-between md:justify-end border-t md:border-t-0 pt-4 md:pt-0 border-gray-100">
-                            <span className="text-base font-extrabold text-jdi-blue whitespace-nowrap">{formatCurrency(data.rate)}/m²</span>
-                            <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
-                              standard === key ? 'border-jdi-blue bg-jdi-blue' : 'border-[#d2d2d7]'
-                            }`}>
-                              {standard === key && <div className="w-2 h-2 rounded-full bg-white" />}
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {step === 3 && (
-                  <div key="step-3" className="animate-fade-in">
-                    <span className="text-xs uppercase font-bold text-jdi-blue tracking-wider font-display">Passo 3 de 4</span>
                     <h2 className="text-xl md:text-2xl font-display font-bold text-jdi-navy mt-1 mb-6">Dimensões e Volumetria da Obra</h2>
 
                     {/* Area Slider */}
@@ -727,14 +655,14 @@
                   </div>
                 )}
 
-                {step === 4 && (
-                  <div key="step-4" className="animate-fade-in">
-                    <span className="text-xs uppercase font-bold text-jdi-blue tracking-wider font-display">Passo 4 de 4</span>
+                {step === 2 && (
+                  <div key="step-2" className="animate-fade-in">
+                    <span className="text-xs uppercase font-bold text-jdi-blue tracking-wider font-display">Passo 2 de 4</span>
                     <h2 className="text-xl md:text-2xl font-display font-bold text-jdi-navy mt-1 mb-6">Divisões e Infraestrutura Complementar</h2>
 
                     {areaMetrics.isTooSmall && (
                       <div className="p-3.5 bg-amber-500/10 border border-amber-500/20 rounded-xl text-xs text-amber-800 leading-relaxed mb-6">
-                        <strong>Dica do Arquiteto:</strong> A sua configuração atual de divisões ({bedrooms} quartos, {bathrooms} casas de banho e {kitchens} cozinha) requer pelo menos <strong>{areaMetrics.minRecommended} m²</strong>. A área atualmente selecionada é de <strong>{area} m²</strong>. Considere reduzir as divisões ou voltar ao Passo 3 para aumentar a área útil.
+                        <strong>Dica do Arquiteto:</strong> A sua configuração atual de divisões ({bedrooms} quartos, {bathrooms} casas de banho e {kitchens} cozinha) requer pelo menos <strong>{areaMetrics.minRecommended} m²</strong>. A área atualmente selecionada é de <strong>{area} m²</strong>. Considere reduzir as divisões ou voltar ao Passo 1 para aumentar a área útil.
                       </div>
                     )}
 
@@ -837,6 +765,78 @@
                         <h4 className="font-display font-bold text-sm text-jdi-navy">Incluir Dependência / Anexo de Serviço</h4>
                         <p className="text-xs text-gray-500 mt-0.5">Adiciona anexo técnico de apoio (inclui quarto e casa de banho de serviço adicionais fora do bloco principal).</p>
                       </div>
+                    </div>
+                  </div>
+                )}
+
+                {step === 3 && (
+                  <div key="step-3" className="animate-fade-in">
+                    <span className="text-xs uppercase font-bold text-jdi-blue tracking-wider font-display">Passo 3 de 4</span>
+                    <h2 className="text-xl md:text-2xl font-display font-bold text-jdi-navy mt-1 mb-6">Selecione o padrão de acabamento e sofisticação</h2>
+
+                    <div className="space-y-4">
+                      {Object.entries(standardRates).map(([key, data]) => (
+                        <div
+                          key={key}
+                          onClick={() => setStandard(key)}
+                          className={`border rounded-2xl p-6 cursor-pointer transition-all duration-300 flex flex-col md:flex-row md:items-center justify-between gap-6 glass-card-option ${
+                            standard === key 
+                              ? 'border-jdi-blue bg-white/90 shadow-[0_8px_20px_rgba(27,95,144,0.06)] ring-1 ring-jdi-blue/20' 
+                              : 'border-white/40 hover:border-gray-300'
+                          }`}
+                        >
+                          <div className="flex-1 flex items-start">
+                            {data.icon}
+                            <div>
+                              <h3 className="font-display font-bold text-base text-[#1d1d1f] mb-1">{data.label}</h3>
+                              <p className="text-xs text-[#86868b] leading-relaxed max-w-xl">{data.desc}</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-6 justify-between md:justify-end border-t md:border-t-0 pt-4 md:pt-0 border-gray-100">
+                            <span className="text-base font-extrabold text-jdi-blue whitespace-nowrap">{formatCurrency(data.rate)}/m²</span>
+                            <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
+                              standard === key ? 'border-jdi-blue bg-jdi-blue' : 'border-[#d2d2d7]'
+                            }`}>
+                              {standard === key && <div className="w-2 h-2 rounded-full bg-white" />}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {step === 4 && (
+                  <div key="step-4" className="animate-fade-in">
+                    <span className="text-xs uppercase font-bold text-jdi-blue tracking-wider font-display">Passo 4 de 4</span>
+                    <h2 className="text-xl md:text-2xl font-display font-bold text-jdi-navy mt-1 mb-6">Onde será construído o seu projeto?</h2>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                      {Object.entries(locationModifiers).map(([key, data]) => (
+                        <div
+                          key={key}
+                          onClick={() => setLocation(key)}
+                          className={`border rounded-2xl p-6 cursor-pointer transition-all duration-300 flex flex-col justify-between min-h-[220px] glass-card-option ${
+                            location === key 
+                              ? 'border-jdi-blue bg-white/90 shadow-[0_8px_20px_rgba(27,95,144,0.06)] ring-1 ring-jdi-blue/20' 
+                              : 'border-white/40 hover:border-gray-300'
+                          }`}
+                        >
+                          <div>
+                            {data.icon}
+                            <h3 className="font-display font-bold text-base text-[#1d1d1f] mt-3 mb-1">{data.label}</h3>
+                            <p className="text-xs text-[#86868b] leading-relaxed">{data.desc}</p>
+                          </div>
+                          <div className="mt-6 flex items-center justify-between">
+                            <span className="text-xs font-semibold text-[#86868b]">Região</span>
+                            <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
+                              location === key ? 'border-jdi-blue bg-jdi-blue' : 'border-[#d2d2d7]'
+                            }`}>
+                              {location === key && <div className="w-2 h-2 rounded-full bg-white" />}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 )}
