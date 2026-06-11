@@ -353,14 +353,23 @@
   function BudgetEstimator() {
     const [step, setStep] = useState(1);
     const [direction, setDirection] = useState(1); // 1 = forward, -1 = backward
-    const [location, setLocation] = useState('base');
-    const [standard, setStandard] = useState('executivo');
-    const [area, setArea] = useState(150);
-    const [floors, setFloors] = useState('rc');
-    const [bedrooms, setBedrooms] = useState(3);
-    const [bathrooms, setBathrooms] = useState(2);
-    const [kitchens, setKitchens] = useState(1);
+    const [location, setLocation] = useState(null);
+    const [standard, setStandard] = useState(null);
+    const [area, setArea] = useState(0);
+    const [floors, setFloors] = useState(null);
+    const [bedrooms, setBedrooms] = useState(0);
+    const [bathrooms, setBathrooms] = useState(0);
+    const [kitchens, setKitchens] = useState(0);
     const [includeAnexo, setIncludeAnexo] = useState(false);
+
+    // Validation helper for wizard steps
+    const isStepValid = (s) => {
+      if (s === 1) return floors !== null && area >= 80;
+      if (s === 2) return bedrooms >= 1 && bathrooms >= 1 && kitchens >= 1;
+      if (s === 3) return standard !== null;
+      if (s === 4) return location !== null;
+      return true;
+    };
 
     // Lead Form inputs
     const [leadName, setLeadName] = useState('');
@@ -442,6 +451,16 @@
 
     // Calculate dynamic values
     const calculation = useMemo(() => {
+      if (!location || !standard || !floors || area < 80) {
+        return {
+          total: 0,
+          minVal: 0,
+          maxVal: 0,
+          projectsLicensing: 0,
+          estruturaTosco: 0,
+          acabamentosInstalacoes: 0
+        };
+      }
       const rate = standardRates[standard].rate;
       const baseCost = area * rate;
       const locationMod = locationModifiers[location].value;
@@ -471,8 +490,11 @@
 
     // Space recommendation metrics
     const areaMetrics = useMemo(() => {
+      if (bedrooms === 0 && bathrooms === 0 && kitchens === 0) {
+        return { minRecommended: 0, isTooSmall: false };
+      }
       const minRecommended = (bedrooms * 15) + (bathrooms * 6) + (kitchens * 12) + 40;
-      const isTooSmall = area < minRecommended;
+      const isTooSmall = area > 0 && area < minRecommended;
       return { minRecommended, isTooSmall };
     }, [area, bedrooms, bathrooms, kitchens]);
 
@@ -513,13 +535,13 @@
     const handleRestart = () => {
       setDirection(-1);
       setStep(1);
-      setLocation('base');
-      setStandard('executivo');
-      setArea(150);
-      setFloors('rc');
-      setBedrooms(3);
-      setBathrooms(2);
-      setKitchens(1);
+      setLocation(null);
+      setStandard(null);
+      setArea(0);
+      setFloors(null);
+      setBedrooms(0);
+      setBathrooms(0);
+      setKitchens(0);
       setIncludeAnexo(false);
       setFormSubmitted(false);
       setIsSubmitting(false);
@@ -538,7 +560,7 @@
             nome: leadName,
             email: leadEmail,
             telefone: leadPhone,
-            standard: standardRates[standard].label,
+            standard: standard ? standardRates[standard].label : '',
             area: area,
             custo: `${formatCurrency(calculation.minVal)} a ${formatCurrency(calculation.maxVal)}`,
             totalCost: calculation.total
@@ -550,10 +572,10 @@
             nome: leadName,
             email: leadEmail,
             telefone: leadPhone,
-            localizacao: locationModifiers[location].label,
-            padrao_acabamento: standardRates[standard].label,
+            localizacao: location ? locationModifiers[location].label : '',
+            padrao_acabamento: standard ? standardRates[standard].label : '',
             area_bruta: `${area} m²`,
-            pisos: floorMultipliers[floors].label,
+            pisos: floors ? floorMultipliers[floors].label : '',
             quartos: bedrooms,
             casas_de_banho: bathrooms,
             cozinhas: kitchens,
@@ -611,13 +633,13 @@
                     <div className="mb-10 bg-[#1b5f90]/5 backdrop-blur-sm p-6 rounded-xl border border-[#1b5f90]/10">
                       <div className="flex justify-between items-center mb-4">
                         <label className="text-sm font-bold text-jdi-navy">Área Bruta de Construção</label>
-                        <span className="text-2xl font-display font-extrabold text-jdi-blue">{area} m²</span>
+                        <span className="text-2xl font-display font-extrabold text-jdi-blue">{area >= 80 ? `${area} m²` : 'Mova o slider...'}</span>
                       </div>
                       <input 
                         type="range" 
                         min="80" 
                         max="600" 
-                        value={area}
+                        value={area >= 80 ? area : 80}
                         onChange={(e) => setArea(Number(e.target.value))}
                         className="w-full accent-jdi-blue cursor-pointer"
                       />
@@ -676,7 +698,7 @@
                         <div className="flex items-center justify-between mt-4">
                           <button
                             type="button"
-                            onClick={() => setBedrooms(prev => Math.max(1, prev - 1))}
+                            onClick={() => setBedrooms(prev => Math.max(0, prev - 1))}
                             className="w-9 h-9 rounded-full bg-white/60 text-[#1d1d1f] border border-white/80 flex items-center justify-center font-bold text-lg hover:bg-white/90 transition-all"
                           >
                             &minus;
@@ -701,7 +723,7 @@
                         <div className="flex items-center justify-between mt-4">
                           <button
                             type="button"
-                            onClick={() => setBathrooms(prev => Math.max(1, prev - 1))}
+                            onClick={() => setBathrooms(prev => Math.max(0, prev - 1))}
                             className="w-9 h-9 rounded-full bg-white/60 text-[#1d1d1f] border border-white/80 flex items-center justify-center font-bold text-lg hover:bg-white/90 transition-all"
                           >
                             &minus;
@@ -726,7 +748,7 @@
                         <div className="flex items-center justify-between mt-4">
                           <button
                             type="button"
-                            onClick={() => setKitchens(prev => Math.max(1, prev - 1))}
+                            onClick={() => setKitchens(prev => Math.max(0, prev - 1))}
                             className="w-9 h-9 rounded-full bg-white/60 text-[#1d1d1f] border border-white/80 flex items-center justify-center font-bold text-lg hover:bg-white/90 transition-all"
                           >
                             &minus;
@@ -924,11 +946,11 @@
                       <div className="grid grid-cols-2 md:grid-cols-5 gap-4 p-5 text-xs">
                         <div>
                           <span className="text-gray-400 uppercase font-semibold block mb-1">Localização</span>
-                          <span className="font-bold text-jdi-navy">{locationModifiers[location].label.split('/')[0]}</span>
+                          <span className="font-bold text-jdi-navy">{location ? locationModifiers[location].label.split('/')[0] : ''}</span>
                         </div>
                         <div>
                           <span className="text-gray-400 uppercase font-semibold block mb-1">Nível Acabamento</span>
-                          <span className="font-bold text-jdi-navy">{standardRates[standard].label}</span>
+                          <span className="font-bold text-jdi-navy">{standard ? standardRates[standard].label : ''}</span>
                         </div>
                         <div>
                           <span className="text-gray-400 uppercase font-semibold block mb-1">Área Bruta</span>
@@ -936,7 +958,7 @@
                         </div>
                         <div>
                           <span className="text-gray-400 uppercase font-semibold block mb-1">Carga Volumétrica</span>
-                          <span className="font-bold text-jdi-navy">{floorMultipliers[floors].label}</span>
+                          <span className="font-bold text-jdi-navy">{floors ? floorMultipliers[floors].label : ''}</span>
                         </div>
                         <div>
                           <span className="text-gray-400 uppercase font-semibold block mb-1">Tipologia</span>
@@ -1051,7 +1073,12 @@
                 <button
                   type="button"
                   onClick={nextStep}
-                  className="bg-jdi-navy hover:bg-[#1b5f90] text-white font-display font-bold text-sm py-2.5 px-8 rounded-xl transition-all shadow-md"
+                  disabled={!isStepValid(step)}
+                  className={`font-display font-bold text-sm py-2.5 px-8 rounded-xl transition-all shadow-md ${
+                    isStepValid(step)
+                      ? 'bg-jdi-navy hover:bg-[#1b5f90] text-white cursor-pointer'
+                      : 'bg-gray-200 text-gray-400 cursor-not-allowed shadow-none'
+                  }`}
                 >
                   {step === 4 ? 'Gerar Estimativa de Orçamento' : 'Próximo Passo'}
                 </button>
@@ -1069,7 +1096,11 @@
               <div className="mb-6 pb-6 border-b border-[#1b3d68]">
                 <span className="text-[11px] text-gray-400 uppercase block mb-1">Faixa Dinâmica Estimada</span>
                 <div className="text-xl md:text-2xl font-display font-extrabold text-jdi-gold">
-                  {formatCurrency(calculation.minVal)} &ndash; {formatCurrency(calculation.maxVal)}
+                  {calculation.total > 0 ? (
+                    `${formatCurrency(calculation.minVal)} – ${formatCurrency(calculation.maxVal)}`
+                  ) : (
+                    <span className="text-sm font-normal text-gray-400">Aguardando seleção...</span>
+                  )}
                 </div>
               </div>
 
@@ -1077,25 +1108,37 @@
               <div className="space-y-4 text-xs">
                 <div className="flex justify-between border-b border-[#132847] pb-2">
                   <span className="text-gray-400">Localização:</span>
-                  <span className="font-bold text-right text-white truncate max-w-[160px]" title={locationModifiers[location].label}>
-                    {locationModifiers[location].label.split('/')[0]}
+                  <span className="font-bold text-right text-white truncate max-w-[160px]" title={location ? locationModifiers[location].label : ''}>
+                    {location ? locationModifiers[location].label.split('/')[0] : 'Não selecionada'}
                   </span>
                 </div>
                 <div className="flex justify-between border-b border-[#132847] pb-2">
                   <span className="text-gray-400">Padrão:</span>
-                  <span className="font-bold text-white">{standardRates[standard].label}</span>
+                  <span className="font-bold text-white">
+                    {standard ? standardRates[standard].label : 'Não selecionado'}
+                  </span>
                 </div>
                 <div className="flex justify-between border-b border-[#132847] pb-2">
                   <span className="text-gray-400">Área Construída:</span>
-                  <span className="font-bold text-white">{area} m²</span>
+                  <span className="font-bold text-white">
+                    {area >= 80 ? `${area} m²` : 'Não selecionada'}
+                  </span>
                 </div>
                 <div className="flex justify-between border-b border-[#132847] pb-2">
                   <span className="text-gray-400">Volumetria:</span>
-                  <span className="font-bold text-white">{floorMultipliers[floors].label}</span>
+                  <span className="font-bold text-white">
+                    {floors ? floorMultipliers[floors].label : 'Não selecionada'}
+                  </span>
                 </div>
                 <div className="flex justify-between border-b border-[#132847] pb-2">
                   <span className="text-gray-400">Divisões Internas:</span>
-                  <span className="font-bold text-white text-right">{bedrooms}Q / {bathrooms}WC / {kitchens}C</span>
+                  <span className="font-bold text-white text-right">
+                    {bedrooms >= 1 || bathrooms >= 1 || kitchens >= 1 ? (
+                      `${bedrooms}Q / ${bathrooms}WC / ${kitchens}C`
+                    ) : (
+                      'Não selecionadas'
+                    )}
+                  </span>
                 </div>
                 <div className="flex justify-between border-b border-[#132847] pb-2">
                   <span className="text-gray-400">Anexo de Serviço:</span>
