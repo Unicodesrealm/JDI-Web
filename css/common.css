@@ -690,3 +690,231 @@ html, body {
     right: 12px;
   }
 }
+
+/* ─── JDI Living Bot Ambient States ───────────────────────────────── */
+body {
+  transition: filter 1.2s ease;
+}
+
+/* Lonely / Dormant State */
+body.jdi-lonely-mode {
+  filter: grayscale(18%) brightness(95%);
+}
+
+body.jdi-lonely-mode .architectural-bg .blueprint-truss {
+  animation: drawBlueprint 60s linear forwards infinite !important;
+}
+body.jdi-lonely-mode .architectural-bg .blueprint-dash {
+  animation: drawBlueprintDash 80s linear forwards infinite !important;
+}
+
+/* Bottom-Right Pulsing Bot Status */
+.jdi-bot-status {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  background: rgba(10, 15, 29, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 8px 14px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 16px rgba(10, 15, 29, 0.15);
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.jdi-bot-status.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.jdi-bot-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #a0aec0;
+  animation: jdiBotPulse 2s infinite;
+}
+
+.jdi-bot-status-text {
+  font-family: var(--nav-font);
+  font-size: 0.72rem;
+  color: #a0aec0;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+@keyframes jdiBotPulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(160, 174, 192, 0.4); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(160, 174, 192, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(160, 174, 192, 0); }
+}
+
+/* Executive Welcoming Toast */
+.jdi-bot-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: min(380px, 90vw);
+  background: rgba(25, 53, 80, 0.95);
+  backdrop-filter: saturate(180%) blur(16px);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  border: 1px solid rgba(30, 168, 252, 0.25);
+  padding: 16px 20px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(10, 15, 29, 0.3);
+  z-index: 1001;
+  transform: translateX(120%);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.jdi-bot-toast.visible {
+  transform: translateX(0);
+}
+
+.jdi-bot-toast-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.jdi-bot-toast-title {
+  font-family: var(--body-font);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #1ea8fc;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.jdi-bot-toast-close {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 1.1rem;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.jdi-bot-toast-close:hover {
+  color: #ffffff;
+}
+
+.jdi-bot-toast-body {
+  font-family: var(--body-font);
+  font-size: 0.82rem;
+  color: #e2e8f0;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+/* ─── Navbar Guide Indicatives ───────────────────────────────────── */
+.nav-links a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.nav-indicator-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--jdi-cyan);
+  display: inline-block;
+  opacity: 0.8;
+}
+
+.nav-indicator-pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  display: inline-block;
+  position: relative;
+}
+
+.nav-indicator-pulse::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  background: #10b981;
+  animation: navPulse 1.8s infinite;
+}
+
+@keyframes navPulse {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(2.8); opacity: 0; }
+}
+
+.nav-indicator-badge {
+  font-size: 0.62rem;
+  font-weight: 800;
+  padding: 1px 5px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+}
+
+.nav-indicator-badge.gold {
+  background: rgba(249, 173, 10, 0.12);
+  border: 1px solid rgba(249, 173, 10, 0.4);
+  color: #f9ad0a;
+  animation: goldPulse 2s infinite;
+}
+
+.nav-indicator-badge.blue {
+  background: rgba(30, 168, 252, 0.1);
+  border: 1px solid rgba(30, 168, 252, 0.35);
+  color: #1ea8fc;
+}
+
+.nav-indicator-badge.gray {
+  background: rgba(148, 163, 184, 0.1);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  color: #94a3b8;
+}
+
+@keyframes goldPulse {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(249, 173, 10, 0.2); }
+  50% { transform: scale(1.02); box-shadow: 0 0 0 4px rgba(249, 173, 10, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(249, 173, 10, 0); }
+}
+
+/* ─── Crimson Real-Time Dashboard Helpers ────────────────────────── */
+.telemetry-card {
+  background: rgba(20, 10, 10, 0.35);
+  border: 1px solid rgba(239, 68, 68, 0.12);
+  border-radius: 12px;
+  padding: 16px;
+  transition: all 0.3s;
+}
+
+.telemetry-card:hover {
+  border-color: rgba(239, 68, 68, 0.25);
+  background: rgba(20, 10, 10, 0.45);
+}
+
+.telemetry-sparkline {
+  width: 100%;
+  height: 48px;
+  stroke: #ef4444;
+  stroke-width: 1.5px;
+  fill: url(#red-gradient);
+}
+

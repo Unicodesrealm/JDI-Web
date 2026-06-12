@@ -562,6 +562,300 @@
       const [activeTab, setActiveTab] = React.useState('overview');
       const [dbState, setDbState] = React.useState(getDB());
 
+      // Real-time Telemetry State
+      const [liveAttention, setLiveAttention] = React.useState([50, 52, 48, 55, 58, 62, 60, 65, 70, 68]);
+      const [liveInteractions, setLiveInteractions] = React.useState([2, 5, 3, 8, 4, 6, 5, 7, 9, 6]);
+      const [affiliatedData, setAffiliatedData] = React.useState([
+        { name: 'JDI Construções Cíveis', status: 'Online', users: 12, trend: [20, 25, 22, 28, 30, 27, 32, 35, 31, 38] },
+        { name: 'JDI Hidráulica & Saneamento', status: 'Online', users: 5, trend: [10, 12, 11, 15, 14, 13, 16, 18, 17, 20] },
+        { name: 'JDI Imobiliária Limitada', status: 'Online', users: 8, trend: [15, 18, 16, 22, 20, 25, 23, 28, 26, 30] },
+        { name: 'JDI Logística Distrital', status: 'Offline', users: 0, trend: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0] }
+      ]);
+
+      React.useEffect(() => {
+        if (activeTab !== 'telemetry') return;
+
+        const interval = setInterval(() => {
+          // Check if body is in lonely mode to scale attention level
+          const isLonelyMode = document.body.classList.contains('jdi-lonely-mode');
+          const baseAttention = isLonelyMode ? 8 : 75;
+          const fluctuation = Math.floor(Math.random() * 16) - 8; // -8 to +8
+          const nextAttention = Math.max(0, Math.min(100, baseAttention + fluctuation));
+
+          setLiveAttention(prev => {
+            const next = [...prev.slice(1), nextAttention];
+            return next;
+          });
+
+          // Interactions
+          const nextInter = isLonelyMode ? 0 : Math.floor(Math.random() * 8) + 2;
+          setLiveInteractions(prev => {
+            const next = [...prev.slice(1), nextInter];
+            return next;
+          });
+
+          // Affiliated Sites
+          setAffiliatedData(prev => {
+            return prev.map(site => {
+              if (site.status === 'Offline') return site;
+              const userDiff = Math.floor(Math.random() * 3) - 1; // -1, 0, 1
+              const nextUsers = Math.max(1, site.users + userDiff);
+              const nextTrendVal = Math.max(5, Math.min(50, (site.trend[site.trend.length - 1] || 10) + (Math.floor(Math.random() * 7) - 3)));
+              return {
+                ...site,
+                users: nextUsers,
+                trend: [...site.trend.slice(1), nextTrendVal]
+              };
+            });
+          });
+        }, 1500);
+
+        return () => clearInterval(interval);
+      }, [activeTab]);
+
+      function renderTelemetry() {
+        const makePath = (points, width = 350, height = 80, maxVal = 100) => {
+          if (points.length === 0) return '';
+          const stepX = width / (points.length - 1);
+          return points.map((p, idx) => {
+            const x = idx * stepX;
+            const y = height - (p / maxVal) * height;
+            return `${idx === 0 ? 'M' : 'L'} ${x.toFixed(1)} ${y.toFixed(1)}`;
+          }).join(' ');
+        };
+
+        const attentionPath = makePath(liveAttention, 350, 80, 100);
+        const lastAttention = liveAttention[liveAttention.length - 1];
+        const lastInteraction = liveInteractions[liveInteractions.length - 1];
+
+        // Is JDI Bot in dormant or active state?
+        const isLonelyMode = document.body.classList.contains('jdi-lonely-mode');
+
+        return e('div', { key: 'view-telemetry', style: { color: '#ef4444' } }, [
+          // Header Crimson
+          e('div', {
+            key: 'tel-hdr',
+            style: {
+              background: 'linear-gradient(90deg, #7f1d1d, #b91c1c)',
+              padding: '20px',
+              borderRadius: '16px',
+              color: '#ffffff',
+              marginBottom: '28px',
+              boxShadow: '0 4px 20px rgba(185, 28, 28, 0.15)',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }
+          }, [
+            e('div', { key: 'tel-hdr-txt' }, [
+              e('h2', { style: { fontSize: '1.25rem', fontWeight: 800, margin: 0 } }, 'Painel de Telemetria Real-Time'),
+              e('p', { style: { fontSize: '0.8rem', color: '#fca5a5', margin: '4px 0 0' } }, 'Monitorização de tráfego, atenção e conexões dos portais filiados da JDI.')
+            ]),
+            e('div', {
+              key: 'tel-hdr-status',
+              style: {
+                background: 'rgba(0,0,0,0.25)',
+                padding: '8px 16px',
+                borderRadius: '20px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                border: '1px solid rgba(255,255,255,0.1)'
+              }
+            }, [
+              e('div', {
+                key: 'tel-hdr-status-dot',
+                style: {
+                  width: '10px',
+                  height: '10px',
+                  borderRadius: '50%',
+                  background: isLonelyMode ? '#64748b' : '#10b981',
+                  boxShadow: isLonelyMode ? 'none' : '0 0 10px #10b981'
+                }
+              }),
+              e('span', { key: 'tel-hdr-status-label', style: { fontSize: '0.75rem', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.05em' } }, 
+                isLonelyMode ? 'JDI Bot: Dormant' : 'JDI Bot: Active'
+              )
+            ])
+          ]),
+
+          // Grid Layout
+          e('div', {
+            key: 'tel-grid',
+            style: {
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+              gap: '24px',
+              marginBottom: '28px'
+            }
+          }, [
+            // Card 1: Attention Index (Tiny Line Graph)
+            e('div', { key: 'tel-card-1', className: 'telemetry-card' }, [
+              e('div', { key: 'tel-card-1-meta', style: { display: 'flex', justifyContent: 'space-between', marginBottom: '12px' } }, [
+                e('span', { style: { fontSize: '0.85rem', color: '#f87171', fontWeight: 'bold' } }, 'Índice de Atenção do Utilizador'),
+                e('span', { style: { fontSize: '1.1rem', color: '#ffffff', fontWeight: 'bold' } }, `${lastAttention}%`)
+              ]),
+              e('svg', {
+                key: 'tel-card-1-svg',
+                style: { width: '100%', height: '80px', background: 'rgba(0,0,0,0.25)', borderRadius: '8px', padding: '10px 0' },
+                viewBox: '0 0 350 80'
+              }, [
+                e('defs', { key: 'svg-defs-t' }, [
+                  e('linearGradient', { id: 'red-gradient', x1: '0', y1: '0', x2: '0', y2: '1', key: 'red-grad-t' }, [
+                    e('stop', { offset: '0%', stopColor: '#ef4444', stopOpacity: '0.3', key: 'stop-0-t' }),
+                    e('stop', { offset: '100%', stopColor: '#ef4444', stopOpacity: '0.0', key: 'stop-100-t' })
+                  ])
+                ]),
+                // area path
+                e('path', {
+                  key: 'tel-card-1-area',
+                  d: `${attentionPath} L 350 80 L 0 80 Z`,
+                  fill: 'url(#red-gradient)',
+                  stroke: 'none'
+                }),
+                // line path
+                e('path', {
+                  key: 'tel-card-1-line',
+                  d: attentionPath,
+                  fill: 'none',
+                  stroke: '#ef4444',
+                  strokeWidth: '2'
+                })
+              ]),
+              e('span', { key: 'tel-card-1-time', style: { fontSize: '0.7rem', color: '#ef4444', display: 'block', marginTop: '8px', textAlign: 'right' } }, 'Actualizado a cada 1.5s')
+            ]),
+
+            // Card 2: Interaction Rate (Tiny Bar Graph)
+            e('div', { key: 'tel-card-2', className: 'telemetry-card' }, [
+              e('div', { key: 'tel-card-2-meta', style: { display: 'flex', justifyContent: 'space-between', marginBottom: '12px' } }, [
+                e('span', { style: { fontSize: '0.85rem', color: '#f87171', fontWeight: 'bold' } }, 'Frequência de Interacção (Clicks/Hovers)'),
+                e('span', { style: { fontSize: '1.1rem', color: '#ffffff', fontWeight: 'bold' } }, `${lastInteraction} req/s`)
+              ]),
+              e('svg', {
+                key: 'tel-card-2-svg',
+                style: { width: '100%', height: '80px', background: 'rgba(0,0,0,0.25)', borderRadius: '8px', padding: '10px 0' },
+                viewBox: '0 0 350 80'
+              }, 
+                liveInteractions.map((val, idx) => {
+                  const barW = 18;
+                  const gap = (350 - (liveInteractions.length * barW)) / (liveInteractions.length - 1);
+                  const x = idx * (barW + gap);
+                  const barH = (val / 15) * 60; // max value 15
+                  const y = 80 - barH;
+                  return e('rect', {
+                    key: `bar-${idx}`,
+                    x: x,
+                    y: y,
+                    width: barW,
+                    height: barH,
+                    rx: 3,
+                    fill: '#ef4444',
+                    opacity: 0.4 + (idx / 15)
+                  });
+                })
+              ),
+              e('span', { key: 'tel-card-2-time', style: { fontSize: '0.7rem', color: '#ef4444', display: 'block', marginTop: '8px', textAlign: 'right' } }, 'Fluxo de eventos bot')
+            ])
+          ]),
+
+          // Affiliated Sites Telemetry Section
+          e('div', {
+            key: 'tel-aff',
+            style: {
+              background: 'rgba(20, 10, 10, 0.25)',
+              border: '1px solid rgba(239, 68, 68, 0.08)',
+              borderRadius: '16px',
+              padding: '24px'
+            }
+          }, [
+            e('h3', { key: 'tel-aff-title', style: { fontSize: '1rem', fontWeight: 'bold', color: '#fca5a5', marginTop: 0, marginBottom: '16px' } }, 'Telemetria Real-Time de Portais Filiados'),
+            e('div', {
+              key: 'tel-aff-list',
+              style: {
+                display: 'grid',
+                gridTemplateColumns: '1fr',
+                gap: '12px'
+              }
+            }, affiliatedData.map((site, sIdx) => {
+              const sitePath = makePath(site.trend, 100, 20, 50);
+              const isOffline = site.status === 'Offline';
+
+              return e('div', {
+                key: `site-${sIdx}`,
+                style: {
+                  background: 'rgba(10,5,5,0.4)',
+                  border: '1px solid rgba(239, 68, 68, 0.06)',
+                  borderRadius: '12px',
+                  padding: '12px 20px',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  flexWrap: 'wrap',
+                  gap: '12px'
+                }
+              }, [
+                // Col 1: Portal Name & Status
+                e('div', { key: 'c1', style: { display: 'flex', alignItems: 'center', gap: '12px', minWidth: '240px' } }, [
+                  e('div', {
+                    key: 'c1-dot',
+                    style: {
+                      width: '8px',
+                      height: '8px',
+                      borderRadius: '50%',
+                      background: isOffline ? '#475569' : '#10b981',
+                      boxShadow: isOffline ? 'none' : '0 0 6px #10b981'
+                    }
+                  }),
+                  e('div', { key: 'c1-txt' }, [
+                    e('h4', { style: { fontSize: '0.85rem', fontWeight: 'bold', color: '#ffffff', margin: 0 } }, site.name),
+                    e('span', { style: { fontSize: '0.7rem', color: isOffline ? '#64748b' : '#10b981' } }, site.status)
+                  ])
+                ]),
+                // Col 2: Active Users
+                e('div', { key: 'c2', style: { minWidth: '100px' } }, [
+                  e('span', { style: { fontSize: '0.7rem', color: '#f87171', display: 'block' } }, 'Utilizadores Activos'),
+                  e('strong', { style: { fontSize: '0.9rem', color: '#ffffff' } }, isOffline ? '0' : site.users)
+                ]),
+                // Col 3: Sparkline SVG (ticking)
+                e('div', { key: 'c3', style: { width: '100px', height: '20px' } }, [
+                  !isOffline && e('svg', {
+                    key: `spark-svg-${sIdx}`,
+                    style: { width: '100px', height: '20px', overflow: 'visible' },
+                    viewBox: '0 0 100 20'
+                  }, [
+                    e('path', {
+                      key: `spark-path-${sIdx}`,
+                      d: sitePath,
+                      fill: 'none',
+                      stroke: '#ef4444',
+                      strokeWidth: '1.5'
+                    })
+                  ])
+                ]),
+                // Col 4: Action button
+                e('div', { key: 'c4' }, [
+                  e('button', {
+                    key: 'btn-api',
+                    disabled: isOffline,
+                    style: {
+                      background: isOffline ? 'rgba(255,255,255,0.02)' : 'rgba(239, 68, 68, 0.1)',
+                      border: `1px solid ${isOffline ? 'rgba(255,255,255,0.05)' : 'rgba(239, 68, 68, 0.25)'}`,
+                      color: isOffline ? '#475569' : '#f87171',
+                      fontSize: '0.7rem',
+                      fontWeight: 'bold',
+                      padding: '6px 12px',
+                      borderRadius: '6px',
+                      cursor: isOffline ? 'not-allowed' : 'pointer'
+                    }
+                  }, 'Analizar API')
+                ])
+              ]);
+            }))
+          ])
+        ]);
+      }
+
+
       React.useEffect(() => {
         const handler = () => {
           setDbState(getDB());
@@ -845,7 +1139,8 @@
         }, [
           ['overview', 'Visão Geral'],
           ['leads', 'Conversões e Leads'],
-          ['calculator', 'Preferências do Mercado']
+          ['calculator', 'Preferências do Mercado'],
+          ['telemetry', 'Telemetria Real-Time JDI Bot']
         ].map(([tabKey, label]) => 
           e('button', {
             key: tabKey,
@@ -1306,8 +1601,8 @@
                 ])
               ])
             ])
-          ])
-
+          ]),
+          activeTab === 'telemetry' && renderTelemetry()
         ])
       ]);
     }
@@ -1316,5 +1611,131 @@
     const root = ReactDOM.createRoot(document.getElementById('jdi-admin-dashboard-root'));
     root.render(React.createElement(AdminDashboard));
   }
+
+  // --- JDI LIVING BOT & NAVBAR INDICATORS ---
+  document.addEventListener('DOMContentLoaded', () => {
+    // 1. Dynamic Navbar Tab Indicatives
+    const navLinks = document.querySelectorAll('.nav-links a');
+    navLinks.forEach(link => {
+      const txt = link.textContent.trim().toLowerCase();
+      if (txt.includes('início') || txt.includes('inicio')) {
+        const dot = document.createElement('span');
+        dot.className = 'nav-indicator-dot';
+        dot.style.opacity = '0.3';
+        link.appendChild(dot);
+      } else if (txt.includes('sobre')) {
+        const dot = document.createElement('span');
+        dot.className = 'nav-indicator-dot';
+        dot.style.opacity = '0.4';
+        link.appendChild(dot);
+      } else if (txt.includes('mapa')) {
+        const pulse = document.createElement('span');
+        pulse.className = 'nav-indicator-pulse';
+        link.appendChild(pulse);
+      } else if (txt.includes('serviços') || txt.includes('servicos')) {
+        const dot = document.createElement('span');
+        dot.className = 'nav-indicator-dot';
+        dot.style.opacity = '0.5';
+        link.appendChild(dot);
+      } else if (txt.includes('projectos') || txt.includes('portfólio') || txt.includes('portfolio')) {
+        const badge = document.createElement('span');
+        badge.className = 'nav-indicator-badge blue';
+        badge.textContent = '18';
+        link.appendChild(badge);
+      } else if (txt.includes('blog')) {
+        const badge = document.createElement('span');
+        badge.className = 'nav-indicator-badge blue';
+        badge.textContent = 'Novo';
+        link.appendChild(badge);
+      } else if (txt.includes('orçamento') || txt.includes('orcamento')) {
+        const badge = document.createElement('span');
+        badge.className = 'nav-indicator-badge gold';
+        badge.textContent = 'Simulador';
+        link.appendChild(badge);
+      }
+    });
+
+    // 2. JDI Bot Status Bar (Bottom-Right)
+    const statusContainer = document.createElement('div');
+    statusContainer.className = 'jdi-bot-status';
+    statusContainer.innerHTML = `
+      <div class="jdi-bot-status-dot"></div>
+      <span class="jdi-bot-status-text">JDI Bot: Modo de Espera (Aguardando projectos)</span>
+    `;
+    document.body.appendChild(statusContainer);
+
+    // 3. JDI Bot Toast Notification
+    function showWelcomeToast() {
+      if (sessionStorage.getItem('jdi_bot_greeted')) return;
+      
+      const toast = document.createElement('div');
+      toast.className = 'jdi-bot-toast';
+      toast.innerHTML = `
+        <div class="jdi-bot-toast-header">
+          <span class="jdi-bot-toast-title">JDI Bot Assistente</span>
+          <button class="jdi-bot-toast-close">&times;</button>
+        </div>
+        <div class="jdi-bot-toast-body">
+          Bem-vindo à JDI. É uma honra contar com a sua presença. Explore a nossa página e simule o seu projecto.
+        </div>
+      `;
+      document.body.appendChild(toast);
+      
+      // Close button handler
+      toast.querySelector('.jdi-bot-toast-close').addEventListener('click', () => {
+        toast.classList.remove('visible');
+      });
+      
+      // Slide in
+      setTimeout(() => {
+        toast.classList.add('visible');
+      }, 800);
+      
+      // Auto close
+      setTimeout(() => {
+        toast.classList.remove('visible');
+      }, 6800);
+      
+      sessionStorage.setItem('jdi_bot_greeted', 'true');
+    }
+
+    // 4. Idle/Dormant vs Active Logic
+    let lastActivityTime = Date.now();
+    let isLonely = false;
+    const idleTimeout = 15000; // 15 seconds
+
+    function resetActivity() {
+      lastActivityTime = Date.now();
+      if (isLonely) {
+        isLonely = false;
+        document.body.classList.remove('jdi-lonely-mode');
+        statusContainer.classList.remove('visible');
+        
+        // Dynamic event trigger
+        JDIAnalytics.trackEvent('bot_active', { source: 'user_interaction' });
+      }
+      showWelcomeToast();
+    }
+
+    // Bind interaction events
+    const events = ['mousemove', 'scroll', 'keydown', 'click', 'touchstart'];
+    events.forEach(evt => {
+      window.addEventListener(evt, resetActivity, { passive: true });
+    });
+
+    // Loop checking for idle
+    setInterval(() => {
+      if (Date.now() - lastActivityTime > idleTimeout) {
+        if (!isLonely) {
+          isLonely = true;
+          document.body.classList.add('jdi-lonely-mode');
+          statusContainer.classList.add('visible');
+          
+          // Dynamic event trigger
+          JDIAnalytics.trackEvent('bot_lonely', { duration: Math.round(idleTimeout / 1000) });
+        }
+      }
+    }, 2000);
+  });
 
 })();
