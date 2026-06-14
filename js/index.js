@@ -64,7 +64,7 @@ let currentSlide = 0;
     } else {
       nav.classList.remove('scrolled');
     }
-  });
+  }, { passive: true });
 
   // Initialize
   showSlide(0);
@@ -115,97 +115,108 @@ document.addEventListener("DOMContentLoaded", () => {
     desporto: "#d946ef"        // Magenta
   };
 
-  // Initialize Map centered on central Mozambique with reasonable bounds
-  const map = L.map('homepage-map', {
-    scrollWheelZoom: false,
-    maxBounds: [[-27.5, 29.0], [-9.5, 42.0]], // limit scrolling outside Mozambique region
-    maxBoundsViscosity: 0.8
-  }).setView([-18.6657, 35.5295], 5.5);
-
-  // CartoDB Voyager clean tile layer
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-    subdomains: 'abcd',
-    maxZoom: 18,
-    minZoom: 4
-  }).addTo(map);
-
-  const markersGroup = L.layerGroup().addTo(map);
+  let mapInitialized = false;
+  let map, markersGroup;
   const projectMarkers = {}; // keep map markers index by project ID
 
-  // Render markers & set up click behavior
-  projectsCoords.forEach(project => {
-    const color = catColors[project.cat] || "#1b5f90";
-    const catLabel = catNames[project.cat] || "Projecto";
+  // Initialize Map centered on central Mozambique with reasonable bounds
+  function initMap() {
+    if (mapInitialized) return;
+    mapInitialized = true;
 
-    const popupContent = `
-      <div class="map-popup-card">
-        <div class="map-popup-meta">
-          <span>${catLabel}</span>
+    map = L.map('homepage-map', {
+      scrollWheelZoom: false,
+      maxBounds: [[-27.5, 29.0], [-9.5, 42.0]], // limit scrolling outside Mozambique region
+      maxBoundsViscosity: 0.8
+    }).setView([-18.6657, 35.5295], 5.5);
+
+    // CartoDB Voyager clean tile layer
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      subdomains: 'abcd',
+      maxZoom: 18,
+      minZoom: 4
+    }).addTo(map);
+
+    markersGroup = L.layerGroup().addTo(map);
+
+    // Render markers & set up click behavior
+    projectsCoords.forEach(project => {
+      const color = catColors[project.cat] || "#1b5f90";
+      const catLabel = catNames[project.cat] || "Projecto";
+
+      const popupContent = `
+        <div class="map-popup-card">
+          <div class="map-popup-meta">
+            <span>${catLabel}</span>
+          </div>
+          <h4 class="map-popup-title">${project.title}</h4>
+          <p class="map-popup-loc"><strong>Local:</strong> ${project.loc}</p>
+          <button onclick="window.openProjectModalFromId('${project.id}')" class="map-popup-btn">
+            Ver Detalhes da Obra
+          </button>
         </div>
-        <h4 class="map-popup-title">${project.title}</h4>
-        <p class="map-popup-loc"><strong>Local:</strong> ${project.loc}</p>
-        <button onclick="window.openProjectModalFromId('${project.id}')" class="map-popup-btn">
-          Ver Detalhes da Obra
-        </button>
-      </div>
-    `;
+      `;
 
-    // Circle Marker
-    const marker = L.circleMarker(project.coords, {
-      radius: 9,
-      fillColor: color,
-      color: "#ffffff",
-      weight: 2,
-      opacity: 1,
-      fillOpacity: 0.9
-    });
-
-    marker.bindPopup(popupContent, {
-      maxWidth: 260,
-      closeButton: true,
-      className: 'jdi-map-popup'
-    });
-
-    // Hover scale styling
-    marker.on('mouseover', function () {
-      this.setStyle({
-        radius: 12,
-        fillOpacity: 1.0
+      // Circle Marker
+      const marker = L.circleMarker(project.coords, {
+        radius: 9,
+        fillColor: color,
+        color: "#ffffff",
+        weight: 2,
+        opacity: 1,
+        fillOpacity: 0.9
       });
-    });
 
-    marker.on('mouseout', function () {
-      if (!this.isPopupOpen()) {
+      marker.bindPopup(popupContent, {
+        maxWidth: 260,
+        closeButton: true,
+        className: 'jdi-map-popup'
+      });
+
+      // Hover scale styling
+      marker.on('mouseover', function () {
+        this.setStyle({
+          radius: 12,
+          fillOpacity: 1.0
+        });
+      });
+
+      marker.on('mouseout', function () {
+        if (!this.isPopupOpen()) {
+          this.setStyle({
+            radius: 9,
+            fillOpacity: 0.9
+          });
+        }
+      });
+
+      // When popup closes, scale down the marker style back to normal
+      marker.on('popupclose', function () {
         this.setStyle({
           radius: 9,
           fillOpacity: 0.9
         });
-      }
-    });
-
-    // When popup closes, scale down the marker style back to normal
-    marker.on('popupclose', function () {
-      this.setStyle({
-        radius: 9,
-        fillOpacity: 0.9
+        // Remove active class from list items when popup is closed
+        clearActiveListItems();
       });
-      // Remove active class from list items when popup is closed
-      clearActiveListItems();
-    });
 
-    marker.on('popupopen', function() {
-      this.setStyle({
-        radius: 12,
-        fillOpacity: 1.0
+      marker.on('popupopen', function() {
+        this.setStyle({
+          radius: 12,
+          fillOpacity: 1.0
+        });
+        // Mark corresponding list item as active
+        setActiveListItem(project.id);
       });
-      // Mark corresponding list item as active
-      setActiveListItem(project.id);
+
+      markersGroup.addLayer(marker);
+      projectMarkers[project.id] = marker;
     });
 
-    markersGroup.addLayer(marker);
-    projectMarkers[project.id] = marker;
-  });
+    // Refresh list view to sync active layer states
+    renderDirectoryList(searchInput.value);
+  }
 
   // Render Sidebar Directory List
   const directoryList = document.getElementById("directory-list");
@@ -223,7 +234,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // If matched, show directory item and add map marker
       if (matchTitle || matchLoc || matchCat) {
         // Add marker back to map if it was removed
-        if (!map.hasLayer(projectMarkers[project.id])) {
+        if (mapInitialized && !map.hasLayer(projectMarkers[project.id])) {
           markersGroup.addLayer(projectMarkers[project.id]);
         }
 
@@ -257,7 +268,7 @@ document.addEventListener("DOMContentLoaded", () => {
         directoryList.appendChild(li);
       } else {
         // Remove marker from map
-        if (map.hasLayer(projectMarkers[project.id])) {
+        if (mapInitialized && map.hasLayer(projectMarkers[project.id])) {
           markersGroup.removeLayer(projectMarkers[project.id]);
         }
       }
@@ -265,6 +276,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function selectProject(project) {
+    initMap();
     // Zoom and pan to marker
     map.flyTo(project.coords, 10, {
       animate: true,
@@ -296,8 +308,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Live text search event listener
   searchInput.addEventListener("input", (e) => {
+    initMap();
     renderDirectoryList(e.target.value);
   });
+
+  // Setup Lazy Loading Map Observer
+  const mapObserver = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        initMap();
+        obs.disconnect();
+      }
+    });
+  }, { rootMargin: '300px' });
+  mapObserver.observe(mapElement);
 
   // Initial directory load
   renderDirectoryList();
@@ -408,7 +432,7 @@ window.openProjectModalFromId = async function (projectId) {
       };
       gallerySlider.removeEventListener('scroll', gallerySlider._scrollHandler);
       gallerySlider._scrollHandler = handleScroll;
-      gallerySlider.addEventListener('scroll', handleScroll);
+      gallerySlider.addEventListener('scroll', handleScroll, { passive: true });
     }
   } else {
     gallerySection.style.display = 'none';

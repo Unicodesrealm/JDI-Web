@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       nav.classList.remove('scrolled');
     }
-  });
+  }, { passive: true });
 
   // Automatically open article if "post" query param or hash matches articlesDB
   const urlParams = new URLSearchParams(window.location.search);
@@ -267,7 +267,7 @@ window.openArticleModal = function (articleId) {
     };
     carouselSlider.removeEventListener('scroll', carouselSlider._scrollHandler);
     carouselSlider._scrollHandler = handleScroll;
-    carouselSlider.addEventListener('scroll', handleScroll);
+    carouselSlider.addEventListener('scroll', handleScroll, { passive: true });
 
   } else {
     gallerySec.style.display = "none";

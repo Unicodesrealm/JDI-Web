@@ -89,7 +89,7 @@ function openProjectModal(cardElement) {
           };
           gallerySlider.removeEventListener('scroll', gallerySlider._scrollHandler);
           gallerySlider._scrollHandler = handleScroll;
-          gallerySlider.addEventListener('scroll', handleScroll);
+          gallerySlider.addEventListener('scroll', handleScroll, { passive: true });
         }
       } else {
         gallerySection.style.display = 'none';

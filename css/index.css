@@ -56,6 +56,10 @@
       height: 200vh; /* Spans both pages */
       z-index: 1;
       pointer-events: none;
+      will-change: transform;
+      transform: translate3d(0, 0, 0);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
     }
 
     .interconnected-svg {

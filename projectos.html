@@ -678,7 +678,7 @@
       } else {
         nav.classList.remove('scrolled');
       }
-    });
+    }, { passive: true });
 
     let currentFilter = 'all';
     let searchQuery = '';
