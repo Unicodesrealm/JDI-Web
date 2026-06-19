@@ -99,7 +99,13 @@ const articlesDB = {
     ],
     gallery: [
       "Assets/Namuapala-Team.jpeg",
-      "Assets/incubadora-negocios-namuapala.webp"
+      "Assets/incubadora-negocios-namuapala.webp",
+      "Assets/Colegas/WhatsApp-Image-2026-06-09-at-09.47.29-(1).jpeg",
+      "Assets/Colegas/WhatsApp-Image-2026-06-09-at-09.47.29.jpeg",
+      "Assets/Colegas/WhatsApp-Image-2026-06-09-at-09.47.30.jpeg",
+      "Assets/Colegas/WhatsApp-Image-2026-06-09-at-10.31.20.jpeg",
+      "Assets/Colegas/WhatsApp-Image-2026-06-09-at-10.55.20.jpeg",
+      "Assets/Colegas/WhatsApp-Image-2026-06-10-at-09.19.06.jpeg"
     ],
     portfolioProjects: [
       { id: "project-9", title: "Incubadora de Negócios Namuapala" }
