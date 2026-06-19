@@ -171,11 +171,16 @@
       <img src="Assets/Jdi-promo.svg?v=5" alt="JDI Sociedade Unipessoal, LDA" />
     </a>
 
-    <ul class="nav-links">
-      <li><a href="#hero" class="active">Início</a></li>
-      <li><a href="#about-us">Sobre</a></li>
-      <li><a href="#partners">Parceiros</a></li>
-      <li><a href="#project-map-section">Mapa</a></li>
+    <div class="nav-filter-container">
+      <button class="nav-filter-btn active" id="nav-filter-all-btn" onclick="setNavbarFilter('all')">Todos</button>
+      <button class="nav-filter-btn" id="nav-filter-inst-btn" onclick="setNavbarFilter('inst')">Institucional</button>
+    </div>
+
+    <ul class="nav-links" id="nav-links-menu">
+      <li class="institutional-item"><a href="#hero" class="active">Início</a></li>
+      <li class="institutional-item"><a href="#about-us">Sobre</a></li>
+      <li class="institutional-item"><a href="#partners">Parceiros</a></li>
+      <li class="institutional-item"><a href="#project-map-section">Mapa</a></li>
       <li><a href="#services">Serviços</a></li>
       <li><a href="projectos.html">Portfólio de Projectos</a></li>
       <li><a href="blog.html">Blog</a></li>
@@ -210,6 +215,9 @@
           <a href="#contacts" id="cta-contact" class="btn-primary">
             Entrar em Contacto
           </a>
+          <button id="hero-institutional-btn" class="btn-secondary" onclick="triggerHeroInstitutionalFilter()">
+            Institucional
+          </button>
         </div>
       </div>
 

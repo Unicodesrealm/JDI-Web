@@ -926,3 +926,83 @@ body.jdi-lonely-mode .architectural-bg .blueprint-dash {
   fill: url(#red-gradient);
 }
 
+/* ─── Navbar Filter Controls ────────────────────────────────────── */
+.nav-filter-container {
+  display: flex;
+  align-items: center;
+  background: rgba(25, 52, 80, 0.04);
+  padding: 4px;
+  border-radius: 30px;
+  border: 1px solid rgba(25, 52, 80, 0.05);
+  margin-right: auto;
+  margin-left: 28px;
+  transition: all 0.3s ease;
+}
+
+.nav-filter-btn {
+  font-family: var(--nav-font);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--jdi-navy);
+  border: none;
+  background: transparent;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.nav-filter-btn.active {
+  background: var(--jdi-navy);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(25, 52, 80, 0.15);
+}
+
+/* Navbar filtering animation classes */
+.nav-links li {
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 1;
+  visibility: visible;
+  width: auto;
+  transform: scale(1);
+  transform-origin: center left;
+  display: inline-flex;
+}
+
+.nav-links.filtered-institutional li:not(.institutional-item) {
+  opacity: 0;
+  visibility: hidden;
+  width: 0;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  transform: scale(0.8);
+  pointer-events: none;
+  margin-left: -52px; /* negates the gap between links */
+}
+
+/* Adjust gap when filtered to look centered/clean */
+.nav-links.filtered-institutional {
+  gap: 32px;
+}
+
+/* Responsive adjustment for nav filters */
+@media (max-width: 1024px) {
+  .nav-filter-container {
+    margin-left: 12px;
+    padding: 2px;
+  }
+  .nav-filter-btn {
+    padding: 4px 10px;
+    font-size: 0.68rem;
+  }
+}
+@media (max-width: 768px) {
+  .nav-filter-container {
+    display: none; /* hidden on small screen where nav links fold or are hidden */
+  }
+}
+

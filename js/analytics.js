@@ -1744,3 +1744,56 @@
   });
 
 })();
+
+/* ─── Navbar Filter Controls JS Implementation ────────────────────── */
+window.setNavbarFilter = function(mode) {
+  const navLinks = document.getElementById('nav-links-menu');
+  const allBtns = document.querySelectorAll('#nav-filter-all-btn');
+  const instBtns = document.querySelectorAll('#nav-filter-inst-btn');
+  
+  if (!navLinks) return;
+  
+  if (mode === 'inst') {
+    navLinks.classList.add('filtered-institutional');
+    allBtns.forEach(btn => btn.classList.remove('active'));
+    instBtns.forEach(btn => btn.classList.add('active'));
+    
+    // Store in session storage so it persists page navigations
+    sessionStorage.setItem('jdi_navbar_filter', 'inst');
+    
+    if (window.JDIAnalytics && window.JDIAnalytics.trackEvent) {
+      window.JDIAnalytics.trackEvent('Navbar Filter Applied', { filter: 'Institutional' });
+    }
+  } else {
+    navLinks.classList.remove('filtered-institutional');
+    allBtns.forEach(btn => btn.classList.add('active'));
+    instBtns.forEach(btn => btn.classList.remove('active'));
+    
+    // Clear session storage
+    sessionStorage.removeItem('jdi_navbar_filter');
+    
+    if (window.JDIAnalytics && window.JDIAnalytics.trackEvent) {
+      window.JDIAnalytics.trackEvent('Navbar Filter Cleared', { filter: 'All' });
+    }
+  }
+};
+
+window.triggerHeroInstitutionalFilter = function() {
+  // Apply filter
+  window.setNavbarFilter('inst');
+  
+  // Smooth scroll to About section
+  const aboutSec = document.getElementById('about-us');
+  if (aboutSec) {
+    aboutSec.scrollIntoView({ behavior: 'smooth' });
+  }
+};
+
+// Auto-apply saved filter state on load
+document.addEventListener('DOMContentLoaded', () => {
+  const savedFilter = sessionStorage.getItem('jdi_navbar_filter');
+  if (savedFilter === 'inst') {
+    // Wait a tiny moment for navbar elements to render completely
+    setTimeout(() => window.setNavbarFilter('inst'), 50);
+  }
+});

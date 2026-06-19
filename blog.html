@@ -53,11 +53,16 @@
       <img src="Assets/Jdi-promo.svg?v=5" alt="JDI Sociedade Unipessoal, LDA Logo" />
     </a>
 
-    <ul class="nav-links">
-      <li><a href="index.html#hero">Início</a></li>
-      <li><a href="index.html#about-us">Sobre</a></li>
-      <li><a href="index.html#partners">Parceiros</a></li>
-      <li><a href="index.html#project-map-section">Mapa</a></li>
+    <div class="nav-filter-container">
+      <button class="nav-filter-btn active" id="nav-filter-all-btn" onclick="setNavbarFilter('all')">Todos</button>
+      <button class="nav-filter-btn" id="nav-filter-inst-btn" onclick="setNavbarFilter('inst')">Institucional</button>
+    </div>
+
+    <ul class="nav-links" id="nav-links-menu">
+      <li class="institutional-item"><a href="index.html#hero">Início</a></li>
+      <li class="institutional-item"><a href="index.html#about-us">Sobre</a></li>
+      <li class="institutional-item"><a href="index.html#partners">Parceiros</a></li>
+      <li class="institutional-item"><a href="index.html#project-map-section">Mapa</a></li>
       <li><a href="index.html#services">Serviços</a></li>
       <li><a href="projectos.html">Portfólio de Projectos</a></li>
       <li><a href="blog.html" class="active">Blog</a></li>
