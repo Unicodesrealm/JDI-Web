@@ -926,83 +926,96 @@ body.jdi-lonely-mode .architectural-bg .blueprint-dash {
   fill: url(#red-gradient);
 }
 
-/* ─── Navbar Filter Controls ────────────────────────────────────── */
-.nav-filter-container {
-  display: flex;
-  align-items: center;
-  background: rgba(25, 52, 80, 0.04);
-  padding: 4px;
-  border-radius: 30px;
-  border: 1px solid rgba(25, 52, 80, 0.05);
-  margin-right: auto;
-  margin-left: 28px;
-  transition: all 0.3s ease;
-}
-
-.nav-filter-btn {
-  font-family: var(--nav-font);
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--jdi-navy);
-  border: none;
-  background: transparent;
-  padding: 6px 14px;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  outline: none;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.nav-filter-btn.active {
-  background: var(--jdi-navy);
-  color: #ffffff;
-  box-shadow: 0 2px 8px rgba(25, 52, 80, 0.15);
-}
-
-/* Navbar filtering animation classes */
-.nav-links li {
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  opacity: 1;
-  visibility: visible;
-  width: auto;
-  transform: scale(1);
-  transform-origin: center left;
+/* ─── Dropdown Menu Styles ──────────────────────────────────────── */
+.nav-dropdown {
+  position: relative;
   display: inline-flex;
+  align-items: center;
 }
 
-.nav-links.filtered-institutional li:not(.institutional-item) {
+.dropdown-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px !important;
+}
+
+.dropdown-arrow {
+  font-size: 0.65rem;
+  transition: transform 0.3s ease;
+  opacity: 0.7;
+}
+
+.nav-dropdown:hover .dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(25, 52, 80, 0.08);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(25, 52, 80, 0.08);
+  padding: 8px 0;
+  min-width: 190px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
   opacity: 0;
   visibility: hidden;
-  width: 0;
-  padding: 0;
-  margin: 0;
-  overflow: hidden;
-  transform: scale(0.8);
-  pointer-events: none;
-  margin-left: -52px; /* negates the gap between links */
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1010;
 }
 
-/* Adjust gap when filtered to look centered/clean */
-.nav-links.filtered-institutional {
-  gap: 32px;
+.nav-dropdown:hover .dropdown-menu,
+.dropdown-menu:hover {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(2px);
 }
 
-/* Responsive adjustment for nav filters */
-@media (max-width: 1024px) {
-  .nav-filter-container {
-    margin-left: 12px;
-    padding: 2px;
-  }
-  .nav-filter-btn {
-    padding: 4px 10px;
-    font-size: 0.68rem;
-  }
+.dropdown-menu li {
+  padding: 0 !important;
+  margin: 0 !important;
+  display: block !important;
+  width: 100% !important;
 }
+
+.dropdown-menu a {
+  display: block !important;
+  padding: 10px 20px !important;
+  color: var(--jdi-navy) !important;
+  font-size: 0.88rem !important;
+  font-weight: 600 !important;
+  width: 100% !important;
+  transition: all 0.25s ease !important;
+  border-radius: 0;
+  text-align: left;
+}
+
+.dropdown-menu a::after {
+  display: none !important; /* remove underline for dropdown items */
+}
+
+.dropdown-menu a:hover {
+  background: rgba(27, 95, 144, 0.05);
+  color: var(--jdi-cyan) !important;
+  padding-left: 24px !important;
+}
+
+/* Adjust dropdown position and spacing on mobile */
 @media (max-width: 768px) {
-  .nav-filter-container {
-    display: none; /* hidden on small screen where nav links fold or are hidden */
+  .dropdown-menu {
+    min-width: 160px;
+  }
+  .dropdown-menu a {
+    padding: 8px 16px !important;
+    font-size: 0.82rem !important;
   }
 }
 
