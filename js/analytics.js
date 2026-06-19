@@ -1628,6 +1628,11 @@
         dot.className = 'nav-indicator-dot';
         dot.style.opacity = '0.4';
         link.appendChild(dot);
+      } else if (txt.includes('parceiros')) {
+        const dot = document.createElement('span');
+        dot.className = 'nav-indicator-dot';
+        dot.style.opacity = '0.6';
+        link.appendChild(dot);
       } else if (txt.includes('mapa')) {
         const pulse = document.createElement('span');
         pulse.className = 'nav-indicator-pulse';
