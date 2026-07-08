@@ -1089,6 +1089,26 @@ body.jdi-lonely-mode .architectural-bg .blueprint-dash {
     right: 0; /* slide-in */
   }
 
+  /* Staggered entrance animations for individual menu items */
+  .nav-links li {
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    width: 100%;
+  }
+
+  .nav-bar.active-menu .nav-links li {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .nav-bar.active-menu .nav-links li:nth-child(1) { transition-delay: 0.12s; }
+  .nav-bar.active-menu .nav-links li:nth-child(2) { transition-delay: 0.17s; }
+  .nav-bar.active-menu .nav-links li:nth-child(3) { transition-delay: 0.22s; }
+  .nav-bar.active-menu .nav-links li:nth-child(4) { transition-delay: 0.27s; }
+  .nav-bar.active-menu .nav-links li:nth-child(5) { transition-delay: 0.32s; }
+  .nav-bar.active-menu .nav-links li:nth-child(6) { transition-delay: 0.37s; }
+
   .nav-links a {
     color: #ffffff !important;
     font-size: 1.1rem !important;
