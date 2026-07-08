@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 2000 2000" enable-background="new 0 0 2000 2000" xml:space="preserve">
+<g>
+	<defs>
+		<circle id="SVGID_1_" cx="999.8678" cy="1010.235" r="849.371"/>
+	</defs>
+	<clipPath id="SVGID_00000084507880739192235060000001776674050456321717_">
+		<use xlink:href="#SVGID_1_"  overflow="visible"/>
+	</clipPath>
+	<linearGradient id="SVGID_00000012461451468459270410000007526274842071554960_" gradientUnits="userSpaceOnUse" x1="2217.7456" y1="1435.8834" x2="-250.6874" y2="537.4473">
+		<stop  offset="0.2821" style="stop-color:#193450"/>
+		<stop  offset="0.3628" style="stop-color:#193653"/>
+		<stop  offset="0.4209" style="stop-color:#193C5C"/>
+		<stop  offset="0.472" style="stop-color:#1A476C"/>
+		<stop  offset="0.519" style="stop-color:#1B5682"/>
+		<stop  offset="0.5633" style="stop-color:#1C699F"/>
+		<stop  offset="0.6054" style="stop-color:#1D81C3"/>
+		<stop  offset="0.6452" style="stop-color:#1E9DEC"/>
+		<stop  offset="0.6616" style="stop-color:#1FAAFF"/>
+		<stop  offset="0.6962" style="stop-color:#1FA1F2"/>
+		<stop  offset="0.7599" style="stop-color:#1E8AD1"/>
+		<stop  offset="0.8449" style="stop-color:#1C669A"/>
+		<stop  offset="0.9269" style="stop-color:#1A3E60"/>
+	</linearGradient>
+	<rect x="-1.2136" y="1.9227" clip-path="url(#SVGID_00000084507880739192235060000001776674050456321717_)" fill="#F9F8FD" stroke="url(#SVGID_00000012461451468459270410000007526274842071554960_)" stroke-width="80" stroke-miterlimit="10" width="1969.4854" height="1969.4854"/>
+	<g clip-path="url(#SVGID_00000084507880739192235060000001776674050456321717_)">
+		<image overflow="visible" width="1280" height="985" xlink:href="Colegas/WhatsApp-Image-2026-06-10-at-09.19.06.jpeg"  transform="matrix(1.6 0 0 1.6 -24 212)"></image>
+	</g>
+	<linearGradient id="SVGID_00000136377248628469671780000002872934360324589225_" gradientUnits="userSpaceOnUse" x1="1835.8203" y1="1314.4968" x2="163.9152" y2="705.9732">
+		<stop  offset="0.2821" style="stop-color:#193450"/>
+		<stop  offset="0.3628" style="stop-color:#193653"/>
+		<stop  offset="0.4209" style="stop-color:#193C5C"/>
+		<stop  offset="0.472" style="stop-color:#1A476C"/>
+		<stop  offset="0.519" style="stop-color:#1B5682"/>
+		<stop  offset="0.5633" style="stop-color:#1C699F"/>
+		<stop  offset="0.6054" style="stop-color:#1D81C3"/>
+		<stop  offset="0.6452" style="stop-color:#1E9DEC"/>
+		<stop  offset="0.6616" style="stop-color:#1FAAFF"/>
+		<stop  offset="0.6962" style="stop-color:#1FA1F2"/>
+		<stop  offset="0.7599" style="stop-color:#1E8AD1"/>
+		<stop  offset="0.8449" style="stop-color:#1C669A"/>
+		<stop  offset="0.9269" style="stop-color:#1A3E60"/>
+	</linearGradient>
+	<use xlink:href="#SVGID_1_"  overflow="visible" fill="none" stroke="url(#SVGID_00000136377248628469671780000002872934360324589225_)" stroke-width="80" stroke-miterlimit="10"/>
+</g>
+</svg>
