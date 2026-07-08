@@ -15,14 +15,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
   <!-- Common Site CSS -->
-  <link rel="stylesheet" href="css/common.css?v=3" />
+  <link rel="stylesheet" href="css/common.css?v=5" />
 
   <!-- React & UMD Dependencies -->
   <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="js/analytics.js?v=3" charset="utf-8"></script>
+  <script src="js/analytics.js?v=15" charset="utf-8"></script>
 
   <script>
     tailwind.config = {
@@ -500,6 +500,13 @@
       <li><a href="orcamento.html" class="active">Orçamento</a></li>
       <li><a href="index.html#contacts">Contactos</a></li>
     </ul>
+
+    <!-- Hamburger Toggle for Mobile -->
+    <button class="nav-toggle no-print" id="nav-menu-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
   </nav>
 
   <!-- ── Hero Header ── -->

@@ -1019,3 +1019,155 @@ body.jdi-lonely-mode .architectural-bg .blueprint-dash {
   }
 }
 
+/* ─── Mobile Hamburger Toggle ────────────────────────────────────── */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 17px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1010; /* high z-index to stay above overlay */
+}
+
+.hamburger-line {
+  width: 100%;
+  height: 2px;
+  background-color: var(--jdi-navy);
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: left center;
+}
+
+/* Animations into X */
+.nav-bar.active-menu .hamburger-line:nth-child(1) {
+  transform: rotate(45deg) translate(2px, -1px);
+  background-color: #ffffff; /* line becomes white on dark overlay */
+}
+
+.nav-bar.active-menu .hamburger-line:nth-child(2) {
+  width: 0%;
+  opacity: 0;
+}
+
+.nav-bar.active-menu .hamburger-line:nth-child(3) {
+  transform: rotate(-45deg) translate(2px, 1px);
+  background-color: #ffffff; /* line becomes white on dark overlay */
+}
+
+/* Mobile responsive menu overlay styles */
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: flex;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -100%; /* offscreen */
+    width: 80%;
+    max-width: 300px;
+    height: 100vh;
+    background: rgba(25, 52, 80, 0.98);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 100px 30px 40px;
+    gap: 24px;
+    transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1000;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+  }
+
+  .nav-bar.active-menu .nav-links {
+    right: 0; /* slide-in */
+  }
+
+  .nav-links a {
+    color: #ffffff !important;
+    font-size: 1.1rem !important;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-links a::after {
+    display: none !important;
+  }
+
+  /* Inline dropdown styling for mobile */
+  .nav-dropdown {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .nav-dropdown .dropdown-toggle {
+    width: 100%;
+  }
+
+  .nav-dropdown .dropdown-menu {
+    position: static;
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: none; /* toggled by js */
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 8px 0 0 16px;
+    min-width: 100%;
+    width: 100%;
+    gap: 8px;
+    transition: none;
+  }
+
+  .nav-dropdown.active .dropdown-menu {
+    display: flex;
+  }
+
+  .dropdown-menu a {
+    color: rgba(255, 255, 255, 0.82) !important;
+    padding: 6px 0 !important;
+    font-size: 0.95rem !important;
+  }
+
+  .dropdown-menu a:hover {
+    color: var(--jdi-cyan) !important;
+    background: transparent !important;
+    padding-left: 4px !important;
+  }
+
+  /* Overlay cover backdrop for mobile menu */
+  .nav-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 999;
+  }
+
+  body.menu-open {
+    overflow: hidden; /* disable scroll when menu open */
+  }
+
+  body.menu-open .nav-menu-overlay {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+

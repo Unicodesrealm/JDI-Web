@@ -1736,6 +1736,55 @@
         }
       }
     }, 2000);
+
+    // 5. Mobile Hamburger Menu Toggle
+    const toggleBtn = document.getElementById('nav-menu-toggle');
+    const navBar = document.querySelector('.nav-bar');
+    
+    if (toggleBtn && navBar) {
+      toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isActive = navBar.classList.toggle('active-menu');
+        toggleBtn.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+        document.body.classList.toggle('menu-open', isActive);
+      });
+
+      let overlay = document.querySelector('.nav-menu-overlay');
+      if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.className = 'nav-menu-overlay';
+        document.body.appendChild(overlay);
+      }
+      
+      overlay.addEventListener('click', () => {
+        navBar.classList.remove('active-menu');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        document.body.classList.remove('menu-open');
+      });
+
+      const navDropdown = document.querySelector('.nav-links .nav-dropdown');
+      if (navDropdown) {
+        const dropdownToggle = navDropdown.querySelector('.dropdown-toggle');
+        if (dropdownToggle) {
+          dropdownToggle.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768) {
+              e.preventDefault();
+              e.stopPropagation();
+              navDropdown.classList.toggle('active');
+            }
+          });
+        }
+      }
+
+      const links = document.querySelectorAll('.nav-links a:not(.dropdown-toggle)');
+      links.forEach(link => {
+        link.addEventListener('click', () => {
+          navBar.classList.remove('active-menu');
+          toggleBtn.setAttribute('aria-expanded', 'false');
+          document.body.classList.remove('menu-open');
+        });
+      });
+    }
   });
 
 })();

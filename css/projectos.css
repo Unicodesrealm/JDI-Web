@@ -793,7 +793,6 @@
     }
 
     @media (max-width: 768px) {
-      .nav-links { display: none; }
       .portfolio-hero { padding: 50px 6% 40px; }
       .filter-card { padding: 18px 20px; }
       .projects-grid {

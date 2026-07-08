@@ -562,10 +562,6 @@ body {
 }
 
 @media (max-width: 768px) {
-  .nav-links {
-    display: none;
-  }
-  
   .blog-hero {
     padding: 60px 6% 50px;
   }
